@@ -13,10 +13,18 @@ https://softwaresupport.3dsystems.com/knowledgebase/article/KA-01405/en-us
 ```
 
 
-### 问题
+### 注意
 ```C++
-//这是一个C++文件引入的外部变量，在C#中不知道怎么引入，使用过多种方法，包括 WinAPI LoadLibrary 也不行
+//这是一个C++文件引入的外部常量(不是变量)，在C#中的引入，使用 WinAPI LoadLibrary 但与网上不一样
 extern __declspec(dllimport) const char* HL_STIFFNESS;  
+```
+```C#
+IntPtr lib = LoadLibrary(HL_DLL_PATH);
+//if error ...
+IntPtr ptr = GetProcAddress(lib, varName);
+//if error ...
+IntPtr cVar = Marshal.ReadIntPtr(ptr);        //这才是对的
+FreeLibrary()
 ```
 
 
