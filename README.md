@@ -13,9 +13,9 @@ https://softwaresupport.3dsystems.com/knowledgebase/article/KA-01405/en-us
 ```
 
 
-### 注意
+### 笔记一
 ```C++
-//这是一个C++文件引入的外部常量(不是变量)，在C#中的引入，使用 WinAPI LoadLibrary 但与网上不一样
+//这是一个C++文件引入的外部常量，在C#中的引入，使用 WinAPI LoadLibrary 
 extern __declspec(dllimport) const char* HL_STIFFNESS;  
 ```
 ```C#
@@ -23,12 +23,12 @@ IntPtr lib = LoadLibrary(HL_DLL_PATH);
 //if error ...
 IntPtr ptr = GetProcAddress(lib, varName);
 //if error ...
-IntPtr cVar = Marshal.ReadIntPtr(ptr);        //这才是对的
+IntPtr cVar = Marshal.ReadIntPtr(ptr);        //in here
 FreeLibrary()
 ```
 
 
-### 笔记
+### 笔记二
 ```C++
 //hd.dll 其中一个函数，参数是指针 double 类型
 //跟据API文档说明，参数名称对应获取其值，返回的值为 double 类型；不同的参数名可能只返回一个 double 数据，也有可能是一组，也有可能是结构数据，SO.
