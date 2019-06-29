@@ -1,0 +1,5 @@
+E:\2018\2019_OpenHaptics\OpenHaptics2CSharp\OH2CSharpBridge\bin\Debug\OH2CSharpBridge.dll
+E:\2018\2019_OpenHaptics\OpenHaptics2CSharp\OH2CSharpBridge\bin\Debug\OH2CSharpBridge.pdb
+E:\2018\2019_OpenHaptics\OpenHaptics2CSharp\OH2CSharpBridge\obj\Debug\OH2CSharpBridge.dll
+E:\2018\2019_OpenHaptics\OpenHaptics2CSharp\OH2CSharpBridge\obj\Debug\OH2CSharpBridge.pdb
+E:\2018\2019_OpenHaptics\OpenHaptics2CSharp\OH2CSharpBridge\obj\Debug\OH2CSharpBridge.csprojResolveAssemblyReference.cache
