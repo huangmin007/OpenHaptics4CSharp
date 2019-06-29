@@ -16,63 +16,62 @@ namespace OH2CSharp.HL
     /// </summary>
     public partial class HLAPI
     {
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr LoadLibrary(string lpFileName);
-        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true)]
-        public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+        static HLAPI()
+        {
+            string path = Environment.GetEnvironmentVariable("OH_SDK_BASE");
+            Console.WriteLine("OH_SDK_BASE:{0}", path);
+            Console.WriteLine("Directory:{0}", Environment.CurrentDirectory);
+        }
 
-        [DllImport("kernel32.dll")]
-        public static extern bool FreeLibrary(IntPtr hModule);
-
-        #region Const Variables
+        #region DLL Path/IntPtr/EnumToIntPtr
         /// <summary>
         /// hd.dll 路径，后面在改
         /// </summary>
-        public const string HL_DLL_PATH = @"D:\OpenHaptics\Developer\3.5.0\lib\x64\Release\hl.dll";
-        //public const string HL_DLL_PATH = @"hl.dll";
+        public const string DLL_PATH = @"D:\OpenHaptics\Developer\3.5.0\lib\x64\Release\hl.dll";
+
+        /// <summary>
+        /// hl.dll 指针
+        /// <para>退出时应该释放应该指针，WINAPI.FreeLibrary(DLL_IntPtr)</para>
+        /// </summary>
+        public static readonly IntPtr DLL_IntPtr = WINAPI.LoadLibrary(DLL_PATH);
+
+        /// <summary>
+        /// 获取 HL C++ 常量/枚举对象的指针
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static IntPtr DLLEnumToIntPtr<T>(T value)
+        {
+            //IntPtr DLLIntPtr = WINAPI.LoadLibrary(DLL_PATH);
+            //if (DLLIntPtr == IntPtr.Zero) return IntPtr.Zero;
+            if (DLL_IntPtr == IntPtr.Zero) return IntPtr.Zero;
+
+            String name = Enum.GetName(typeof(T), value);
+
+            IntPtr ptr = WINAPI.GetProcAddress(DLL_IntPtr, name);
+            if (ptr == IntPtr.Zero) return IntPtr.Zero;
+
+            return Marshal.ReadIntPtr(ptr); //返回 C++ 
+        }
         #endregion
 
-        
-        public static IntPtr GetVariables(String vn)
-        {
-            IntPtr lib = LoadLibrary(HL_DLL_PATH);
-            if(lib == IntPtr.Zero)
-            {
-                Console.WriteLine("库错误。。");
-                return IntPtr.Zero;
-            }
-
-            IntPtr ptr = GetProcAddress(lib, vn);
-            if(ptr == IntPtr.Zero)
-            {
-                Console.WriteLine("不存的的variabls..");
-            }
-            return ptr;
-        }
 
         //====================================================STATE MAINTENANCE AND ACCESSORS
-        #region hlEnable/hlDisable
-        [DllImport(HL_DLL_PATH, EntryPoint = "hlEnable")]
-        private static extern void _hlEnable(String cap);
-        [DllImport(HL_DLL_PATH, EntryPoint = "hlDisable")]
-        private static extern void _hlDisable(String cap);
-        [DllImport(HL_DLL_PATH, EntryPoint = "hlIsEnabled")]
-        private static extern byte _hlIsEnabled(String cap);
-
-
+        #region hlCreateContext/hlDeleteContext/hlMakeCurrent/hlEnable/hlDisable/...
         /// <summary>
         /// 创建触觉反馈渲染的上下文(haptic rendering context)
         /// </summary>
-        /// <param name="hHD"></param>
-        /// <returns></returns>
-        [DllImport(HL_DLL_PATH)]
+        /// <param name="hHD">设备句柄</param>
+        /// <returns>返回下下文名柄</returns>
+        [DllImport(DLL_PATH)]
         public static extern IntPtr hlCreateContext(UInt32 hHD);
 
         /// <summary>
         /// 删除触觉反馈渲染的上下文(haptic rendering context)
         /// </summary>
         /// <param name="hHLRC"></param>
-        [DllImport(HL_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hlDeleteContext(IntPtr hHLRC);
 
         /// <summary>
@@ -82,17 +81,29 @@ namespace OH2CSharp.HL
         /// <see cref="HLAPI.hlDeleteContext"/>
         /// </summary>
         /// <param name="hHLRC">hlCreateContext()返回的触觉呈现上下文句柄。</param>
-        [DllImport(HL_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hlMakeCurrent(IntPtr hHLRC);
 
-        
-        [DllImport(HL_DLL_PATH)]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hHD"></param>
+        /// <returns></returns>
+        [DllImport(DLL_PATH)]
         public static extern IntPtr hlContextDevice(UInt32 hHD);
 
-        [DllImport(HL_DLL_PATH)]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [DllImport(DLL_PATH)]
         public static extern IntPtr hlGetCurrentContext();
 
-        [DllImport(HL_DLL_PATH)]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [DllImport(DLL_PATH)]
         public static extern UInt32 hlGetCurrentDevice();
 
         /// <summary>
@@ -102,10 +113,9 @@ namespace OH2CSharp.HL
         /// </summary>
         /// <param name="cap"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM">如果cap不是列出的值之一</exception>
-        public static void hlEnable(HLCapabilityParameters cap)
-        {
-            _hlEnable(Enum.GetName(typeof(HLCapabilityParameters), cap));
-        }
+        public static void hlEnable(HLCapabilityParameters cap){    _hlEnable(DLLEnumToIntPtr(cap));    }
+        [DllImport(DLL_PATH, EntryPoint = "hlEnable")]
+        private static extern void _hlEnable(IntPtr cap);
 
         /// <summary>
         /// 启用或禁用当前呈现上下文的功能。
@@ -114,10 +124,10 @@ namespace OH2CSharp.HL
         /// </summary>
         /// <param name="cap"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM">如果cap不是列出的值之一</exception>
-        public static void hlDisable(HLCapabilityParameters cap)
-        {
-            _hlDisable(Enum.GetName(typeof(HLCapabilityParameters), cap));
-        }
+        public static void hlDisable(HLCapabilityParameters cap){   _hlDisable(DLLEnumToIntPtr(cap));}
+        [DllImport(DLL_PATH, EntryPoint = "hlDisable")]
+        private static extern void _hlDisable(IntPtr cap);
+
 
         /// <summary>
         /// 检查功能是否启用或禁用。
@@ -127,39 +137,47 @@ namespace OH2CSharp.HL
         /// <returns></returns>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM">如果cap不是列出的值之一</exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION">如果没有触觉渲染是当前的</exception>
-        public static bool hlIsEnabled(HLCapabilityParameters cap)
-        {
-            return _hlIsEnabled(Enum.GetName(typeof(HLCapabilityParameters), cap)) == 0x01;
-        }
+        public static bool hlIsEnabled(HLCapabilityParameters cap){ return _hlIsEnabled(DLLEnumToIntPtr(cap)) == 0x01;  }
+        [DllImport(DLL_PATH, EntryPoint = "hlIsEnabled")]
+        private static extern byte _hlIsEnabled(IntPtr cap);
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport(HL_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern HLError hlGetError();
 
-        //[DllImport(HL_DLL_PATH, EntryPoint = "hlGetString", ExactSpelling=true, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        [DllImport(HL_DLL_PATH)]
-        //[return: MarshalAs(UnmanagedType.LPStr)]
-        public static extern IntPtr hlGetString(ref IntPtr pname);
 
-        [DllImport(HL_DLL_PATH, EntryPoint = "HL_VERSION")]
-
-        public static extern IntPtr HL_VERSION();
-
-        public static String __hlGetString(HLGetStringParameters pname)
-        {
-            //Console.WriteLine(Enum.GetName(typeof(HLGetStringParameters), pname));
-            //IntPtr ptr = _hlGetString(Enum.GetName(typeof(HLGetStringParameters), pname));
-            //String str = Marshal.PtrToStringAnsi(ptr);
-            //Console.WriteLine(str);
-            return "";
-        }
-
+        /// <summary>
+        /// 返回描述触觉呈现器实现的字符串。
+        /// </summary>
+        /// <param name="pname">要描述的触觉呈现器实现属性</param>
+        /// <returns>描述触觉呈现器实现的静态字符串</returns>
+        /// <exception cref="HLErrorCodes.HL_INVALID_ENUM">如果pname不是列出的值之一</exception>
+        public static String hlGetString(HLGetStringParameters pname){  return Marshal.PtrToStringAnsi(_hlGetString(DLLEnumToIntPtr(pname)));   }
+        [DllImport(DLL_PATH, EntryPoint = "hlGetString")]
+        public static extern IntPtr _hlGetString(IntPtr pname);
 
         #endregion
 
 
     }
+
+    /// <summary>
+    /// Win API
+    /// </summary>
+    public class WINAPI
+    {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr LoadLibrary(string lpFileName);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true)]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool FreeLibrary(IntPtr hModule);
+    }
+
 }

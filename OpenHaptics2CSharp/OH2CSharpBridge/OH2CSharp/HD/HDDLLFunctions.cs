@@ -22,11 +22,16 @@ namespace OH2CSharp.HD
     /// </summary>
     public class HDAPI
     {
+        static HDAPI()
+        {
+            //Console.WriteLine("Static HDAPI Constructor.");
+        }
+
         #region Const Variables
         /// <summary>
         /// hd.dll 路径，后面在改
         /// </summary>
-        public const string HD_DLL_PATH = @"D:\OpenHaptics\Developer\3.5.0\lib\x64\Release\hd.dll";
+        public const string DLL_PATH = @"D:\OpenHaptics\Developer\3.5.0\lib\x64\Release\hd.dll";
         //public const string HD_DLL_PATH = @"hd.dll";
 
         /// <summary>
@@ -51,7 +56,7 @@ namespace OH2CSharp.HD
         /// <see cref="HDErrorInfo"/>
         /// </summary>
         /// <returns>返回错误信息</returns>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern HDErrorInfo hdGetError();
 
         /// <summary>
@@ -62,7 +67,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="errorCode">HDErrorInfo 的属性 errorCode</param>
         /// <returns>返回错误代码解释的可读字符串指针</returns>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern IntPtr hdGetErrorString(UInt32 errorCode);
 
         /// <summary>
@@ -74,7 +79,7 @@ namespace OH2CSharp.HD
         /// <returns>请求的字符串与参数名关联</returns>
         /// <exception cref="HDErrorCodes.HD_INVALID_ENUM">pname不支持hdGetString()</exception>
         /// <exception cref="HDErrorCodes.HD_INVALID_INPUT_TYPE">pname为不支持字符串作为输入类型</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern IntPtr hdGetString(HDGetStringParameters pname);
         #endregion
 
@@ -93,7 +98,7 @@ namespace OH2CSharp.HD
         /// <param name="hdDeviceName">设备的名称，在控制面板"Geomagic Touch Setup"中找到的名称。
         /// 如果 HD_DEFAULT_DEVICE 作为 hdDeviceName 传入，hdInitiDevice()将初始化它找到的第一个设备。</param>
         /// <returns>返回 HHD 设备句柄，在C++中 HHD 是 unsigned int 类型</returns>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern UInt32 hdInitDevice(String hdDeviceName);
 
         /// <summary>
@@ -110,7 +115,7 @@ namespace OH2CSharp.HD
         ///     hdDisableDevice(hdGetCurrentDevice());
         /// </code>
         /// </example>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdDisableDevice(UInt32 hHD);
 
         /// <summary>
@@ -122,7 +127,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="hHD">已初始化设备的设备句柄。</param>
         /// <exception cref="HD_INVALID_HANDLE">如果hHD为不引用启动的设备</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdMakeCurrentDevice(UInt32 hHD);
 
         /// <summary>
@@ -132,7 +137,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <returns>当前设备的句柄。</returns>
         /// <exception cref="HD_INVALID_HANDLE">没有当前设备，例如：还没有启动任何设备。</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern UInt32 hdGetCurrentDevice();
         #endregion
 
@@ -166,7 +171,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="hHD">已初始化设备的设备句柄</param>
         /// <exception cref="HDErrorCodes.HD_ILLEGAL_BEGIN">如果当前调度程序中的当前设备的帧已经完成。</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdBeginFrame(UInt32 hHD);
 
         /// <summary>
@@ -179,7 +184,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="hHD">已初始化设备的设备句柄</param>
         /// <exception cref="HDErrorCodes.HD_ILLEGAL_END">如果没有正确地调用与相同设备句柄的hdBeginFrame()配对。</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdEndFrame(UInt32 hHD);
         #endregion
 
@@ -192,7 +197,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="cap"></param> 
         /// <exception cref="HDErrorCodes.HD_INVALID_ENUM">如果上限不支持启用/禁用，则为HD_INVALID_ENUM。</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdEnable(HDEDParameters cap);
 
         /// <summary>
@@ -202,7 +207,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="cap"></param>
         /// <exception cref="HDErrorCodes.HD_INVALID_ENUM">如果上限不支持启用/禁用，则为HD_INVALID_ENUM。</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdDisable(HDEDParameters cap);
 
         /// <summary>
@@ -213,7 +218,7 @@ namespace OH2CSharp.HD
         /// <param name="cap">功能属性，参考 HDEDCapabilities</param>
         /// <returns>C++返回的是字节数据</returns>
         /// <exception cref="HDErrorCodes.HD_INVALID_ENUM">如果上限不支持启用/禁用，则为HD_INVALID_ENUM。</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern byte hdIsEnabled(HDEDParameters cap);
         #endregion
 
@@ -224,21 +229,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetBooleanv(HDGetParameters pname, IntPtr value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetBooleanv(HDGetParameters pname, byte[] value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetBooleanv(HDGetParameters pname, ref byte value);
 
         /// <summary>
@@ -246,21 +251,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetIntegerv(HDGetParameters hdProp, IntPtr value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetIntegerv(HDGetParameters hdProp, int[] value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetIntegerv(HDGetParameters hdProp, ref int value);
 
         /// <summary>
@@ -268,21 +273,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetFloatv(HDGetParameters pname, IntPtr value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetFloatv(HDGetParameters pname, float[] vlaue);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetFloatv(HDGetParameters pname, ref float vlaue);
 
         /// <summary>
@@ -290,21 +295,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetDoublev(HDGetParameters pname, IntPtr value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetDoublev(HDGetParameters pname, double[] value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetDoublev(HDGetParameters pname, ref double value);
 
         /// <summary>
@@ -312,21 +317,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetLongv(HDGetParameters pname, IntPtr value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetLongv(HDGetParameters pname, long[] value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdGetLongv(HDGetParameters pname, ref long value);
 
         #endregion
@@ -338,21 +343,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetBooleanv(HDSetParameters pname, IntPtr value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetBooleanv(HDSetParameters pname, byte[] value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetBooleanv(HDSetParameters pname, ref byte value);
 
         /// <summary>
@@ -360,21 +365,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetIntegerv(HDSetParameters pname, IntPtr value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetIntegerv(HDSetParameters pname, int[] value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetIntegerv(HDSetParameters pname, ref int value);
 
         /// <summary>
@@ -382,21 +387,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetFloatv(HDSetParameters pname, IntPtr value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetFloatv(HDSetParameters pname, float[] value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetFloatv(HDSetParameters pname, ref float value);
 
         /// <summary>
@@ -404,21 +409,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetDoublev(HDSetParameters pname, IntPtr value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetDoublev(HDSetParameters pname, double[] value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetDoublev(HDSetParameters pname, ref double value);
 
         /// <summary>
@@ -426,21 +431,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetLongv(HDSetParameters pname, IntPtr value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetLongv(HDSetParameters pname, long[] value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetLongv(HDSetParameters pname, ref long value);
         #endregion
 
@@ -454,21 +459,21 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <returns>返回 HDCalibrationCodes 类型数据</returns>
         /// <exception cref="HDErrorCodes.HD_DEVICE_FAULT">如果无法从设备中获得校准信息</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern HDCalibrationCodes hdCheckCalibration();
 
         /// <summary>
         /// [API文档上没有注释]
         /// </summary>
         /// <returns></returns>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern UInt32 hdCheckCalibrationStyle();
 
         /// <summary>
         /// [API文档上没有注释]
         /// </summary>
         /// <param name="style"></param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdUpdateCalibrationMessage(HDCalibrationStyles style);
 
         /// <summary>
@@ -478,7 +483,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="style">校准样式</param>
         /// <exception cref="HDErrorCodes.HD_DEVICE_FAULT">如果无法在设备上执行校准类型</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdUpdateCalibration(HDCalibrationStyles style);
         #endregion
 
@@ -497,7 +502,7 @@ namespace OH2CSharp.HD
         /// <param name="nPriority">调度优先级，它决定排序的顺序；当多个回调被调度时运行回调(更高的优先级意味着先运行)。</param>
         /// <exception cref="HDErrorCodes.HD_SCHEDULER_FULL">如果调度器已达到一次可支持的调度器操作数的上限。</exception>
         /// <exception cref="HDErrorCodes.HD_INVALID_PRIORITY">超出调度范围，参考：HDSchedulerPriority </exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdScheduleSynchronous(HDSchedulerCallback pCallback, IntPtr pUserData, HDSchedulerPriority nPriority);
 
         /// <summary>
@@ -512,7 +517,7 @@ namespace OH2CSharp.HD
         /// <returns>返回句柄用于取消调度或阻塞等待完成，可使用 hdUnschedule 取消， hdWaitForCompletion 获取调度状态。</returns>
         /// <exception cref="HDErrorCodes.HD_SCHEDULER_FULL">如果调度器已达到一次可支持的调度器操作数的上限。</exception>
         /// <exception cref="HDErrorCodes.HD_INVALID_PRIORITY">超出调度范围，参考：HDSchedulerPriority </exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern ulong hdScheduleAsynchronous(HDSchedulerCallback pCallback, IntPtr pUserData, HDSchedulerPriority nPriority);
 
         /// <summary>
@@ -524,7 +529,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="hHandler">计划的活动操作句柄，通过 hdscheduleAsynchronous() 或 hdscheduleAsynchronous() 获取</param>
         /// <exception cref="HDErrorCodes.HD_INVALID_OPERATION">如果与句柄关联的调度程序操作已经终止</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdUnschedule(ulong hHandler);
 
         /// <summary>
@@ -539,7 +544,7 @@ namespace OH2CSharp.HD
         /// <param name="pHandler">活动异步操作的句柄</param>
         /// <param name="param"></param>
         /// <returns>返回是否仍计划回调</returns>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern byte hdWaitForCompletion(ulong pHandler, HDWaitCode param);
         //[DllImport(DLL_PATH)]
         //public static extern bool hdWaitForCompletion(ulong pHandler, HDWaitCode param);
@@ -551,7 +556,7 @@ namespace OH2CSharp.HD
         /// <see cref="HDAPI.hdStopScheduler"/>
         /// </summary>
         /// <exception cref="HDErrorCodes.HD_TIMER_ERROR">如果伺服回路线程无法初始化或伺服回路无法启动。</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdStartScheduler();
 
         /// <summary>
@@ -561,7 +566,7 @@ namespace OH2CSharp.HD
         /// <see cref="HDAPI.hdDisableDevice"/>
         /// </summary>
         /// <exception cref="HDErrorCodes.HD_TIMER_ERROR">如果伺服回路线程无法初始化</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdStopScheduler();
 
         /// <summary>
@@ -569,7 +574,7 @@ namespace OH2CSharp.HD
         /// <para>用于检查操作花费了多长时间。</para>
         /// </summary>
         /// <returns>返回从伺服回路开始计时的秒数</returns>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern double hdGetSchedulerTimeStamp();
 
         /// <summary>
@@ -583,7 +588,7 @@ namespace OH2CSharp.HD
         /// </summary>
         /// <param name="nRate">调度程序以多少赫兹速率运行</param>
         /// <exception cref="HDErrorCodes.HD_INVALID_VALUE">如果无法设置指定的nRate</exception>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdSetSchedulerRate(ulong nRate);
         #endregion
 
@@ -597,10 +602,10 @@ namespace OH2CSharp.HD
         /// <param name="scaleX"></param>
         /// <param name="scaleY"></param>
         /// <param name="nT">nT 为一个16长度的数组</param>
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdScaleGimbalAngles(double scaleX, double scaleY, double[] nT);
 
-        [DllImport(HD_DLL_PATH)]
+        [DllImport(DLL_PATH)]
         public static extern void hdScaleGimbalAngles(double scaleX, double scaleY, IntPtr nT);
 
 
@@ -612,7 +617,7 @@ namespace OH2CSharp.HD
         /// <param name="password">验证部署许可证的许可证字符串</param>
         /// <returns></returns>
         /// <exception cref="HDErrorCodes.HD_DEVICE_FAULT"></exception>
-        [DllImport(HD_DLL_PATH, EntryPoint = "hdDeploymentLicense", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(DLL_PATH, EntryPoint = "hdDeploymentLicense", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern byte hdDeploymentLicense(string vendorName, string applicationName, string password);
         #endregion
 
