@@ -1,4 +1,4 @@
-# OpenHaptics4CSharp
+# OpenHaptics4CSharpBridgeAPI
 ### 说明
 ```
 <<<<<<< HEAD
