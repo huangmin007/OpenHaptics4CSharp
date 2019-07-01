@@ -1,13 +1,17 @@
 # OpenHaptics4CSharp
 ### 说明
 ```
+<<<<<<< HEAD
 这个项目是 OpenHaptics hd.dll hl.dll for C# API 的项目（ hl.dll for C# 正在开发，Demo示例正在开发）
+=======
+这个项目是 OpenHaptics hd.dll hl.dll for C# API（还未完成 hl.dll for C# 的工作），支持 C#/WPF, C#/WinForm, C#/Uinty 
+>>>>>>> 7699ebed3ff9bfb0b311e31770b22243a2510688
 hd.dll 是触觉式力反馈的低级别的基础层；
 hl.dll hl构建在hd之上，是为高级触觉场景渲染而设计的，它针对的是高级OpenGL开发人员，能快速轻松地将触觉力反馈效果添加到现有的图形式应用程序中
 ```
 
 ```
-官方有一个针对Unity的插件
+官方针对 Unity 的插件
 https://assetstore.unity.com/packages/tools/integration/3d-systems-openhaptics-unity-plugin-134024
 https://softwaresupport.3dsystems.com/knowledgebase/article/KA-01405/en-us
 ```
