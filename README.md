@@ -23,7 +23,7 @@ IntPtr lib = LoadLibrary(HL_DLL_PATH);
 //if error ...
 IntPtr ptr = GetProcAddress(lib, varName);
 //if error ...
-IntPtr cVar = Marshal.ReadIntPtr(ptr);        //in here，常量在程序启动时地址是固定的，在C#中引入C++的外部常量，必须保持地址一致，否则C#运行会出现内存错误
+IntPtr cVar = Marshal.ReadIntPtr(ptr);        //常量/全局变量在程序启动时地址是固定不变的，在C#中引入C++的外部常量或变量，必须保持地址一致，否则C#运行会出现内存错误
 FreeLibrary()
 ```
 
@@ -45,6 +45,13 @@ public static extern void hdGetIntegerv(HDGetParameters hdProp, int[] value);
 [DllImport(HD_DLL_PATH)]
 public static extern void hdGetIntegerv(HDGetParameters hdProp, ref int value);
 
+[DllImport(HD_DLL_PATH)]
+public static extern void hdGetDoublev(HDGetParameters hdProp, ref Vector3D value);
+
+// OR
+//[DllImport(HD_DLL_PATH)]
+//public static extern void hdGetDoublev(HDGetParameters hdProp, out Vector3D value);
+
 //还可以重载，但不建议
 [DllImport(HD_DLL_PATH)]
 public static extern void hdGetIntegerv(Uint32 hdProp, IntPtr value);
@@ -54,4 +61,7 @@ public static extern void hdGetIntegerv(Uint32 hdProp, int[] value);
 
 [DllImport(HD_DLL_PATH)]
 public static extern void hdGetIntegerv(Uint32 hdProp, ref int value);
+```
+```
+没有测试每一个函数功能，可能存在某些错误，只是可能
 ```
