@@ -94,7 +94,7 @@ namespace Example_CannedForceEffect
             else if(cb_event == HLCallbackEvents.HL_EVENT_2BUTTONDOWN)
             {
                 double[] direction = new double[3]{ 0.0, 0.0, 1.0};
-                double duration = 100; //ms
+                double duration = 100; //持续 100ms
 
                 //通过在短时间内指挥具有方向和大小的力来触发脉冲。
                 HLAPI.hlEffectd(HLEffectParams.HL_EFFECT_PROPERTY_DURATION, duration);

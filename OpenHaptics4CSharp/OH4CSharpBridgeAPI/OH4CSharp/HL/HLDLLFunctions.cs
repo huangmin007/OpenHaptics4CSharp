@@ -24,7 +24,7 @@ namespace OH4CSharp.HL
     */
 
     /// <summary>
-    /// 
+    /// 事件回调处理代理函数
     /// </summary>
     /// <param name="callbackEvent">HLCallbackEvents</param>
     /// <param name="obj"></param>
@@ -376,6 +376,15 @@ namespace OH4CSharp.HL
         /// </summary>
         [DllImport(DLL_PATH, EntryPoint = "hlEndFrame")]
         public static extern void hlEndFrame();
+
+        [DllImport(DLL_PATH, EntryPoint = "hlBegin")]
+        public static extern void hlBegin(IntPtr mode);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlEnd")]
+        public static extern void hlEnd();
+
+        [DllImport(DLL_PATH, EntryPoint = "hlFrontFace")]
+        public static extern void hlFrontFace(IntPtr face);
         #endregion
 
 
@@ -1309,6 +1318,47 @@ namespace OH4CSharp.HL
 
         //====================================================PROXY
         #region PROXY
+        /// <summary>
+        /// Proxy
+        /// </summary>
+        /// <param name="pname"></param>
+        /// <param name="value"></param>
+        public static void hlProxy(HLProxyParams pname, IntPtr value) { _hlProxydv(DLLEnumToIntPtr(pname), value); }
+        [DllImport(DLL_PATH, EntryPoint = "hlProxydv")]
+        private static extern void _hlProxydv(IntPtr pname, IntPtr value);
+        /// <summary>
+        /// Proxy
+        /// </summary>
+        /// <param name="pname"></param>
+        /// <param name="value"></param>
+        public static void hlProxy(HLProxyParams pname, double[] value) { _hlProxydv(DLLEnumToIntPtr(pname), value); }
+        [DllImport(DLL_PATH, EntryPoint = "hlProxydv")]
+        private static extern void _hlProxydv(IntPtr pname, double[] value);
+        /// <summary>
+        /// Proxy
+        /// </summary>
+        /// <param name="pname"></param>
+        /// <param name="value"></param>
+        public static void hlProxy(HLProxyParams pname, ref double[] value) { _hlProxydv(DLLEnumToIntPtr(pname), ref value); }
+        [DllImport(DLL_PATH, EntryPoint = "hlProxydv")]
+        private static extern void _hlProxydv(IntPtr pname, ref double[] value);
+        /// <summary>
+        /// Proxy
+        /// </summary>
+        /// <param name="pname"></param>
+        /// <param name="value"></param>
+        public static void hlProxy(HLProxyParams pname, ref double value) { _hlProxydv(DLLEnumToIntPtr(pname), ref value); }
+        [DllImport(DLL_PATH, EntryPoint = "hlProxydv")]
+        private static extern void _hlProxydv(IntPtr pname, ref double value);
+
+        /// <summary>
+        /// Proxy
+        /// </summary>
+        /// <param name="pname"></param>
+        /// <param name="value"></param>
+        public static void hlProxy(HLProxyParams pname, float value) { _hlProxyf(DLLEnumToIntPtr(pname), value); }
+        [DllImport(DLL_PATH, EntryPoint = "hlProxyf")]
+        private static extern void _hlProxyf(IntPtr pname, float value);
         #endregion
 
 
@@ -1352,7 +1402,7 @@ namespace OH4CSharp.HL
         /// <param name="m">由16个浮点数或双精度值组成的数组，表示4x4变换矩阵。</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
         [DllImport(DLL_PATH, EntryPoint = "hlLoadMatrixf")]
-        public static extern void hlLoadMatrix(IntPtr m);
+        public static extern void hlLoadMatrixf(IntPtr m);
         */
 
         /// <summary>
@@ -1530,7 +1580,7 @@ namespace OH4CSharp.HL
         /// <see cref="HLAPI.hlCheckEvents"/>
         /// </summary>
         /// <param name="evt">要订阅的事件</param>
-        /// <param name="shapeId">标识符的形状。回调只会在具有此标识符的形状上发生事件时调用，除非将此参数设置为HL_OBJECT_ANY，在这种情况下，回调将独立于任何对象调用。</param>
+        /// <param name="shapeId">标识符的形状。回调只会在具有此标识符的形状上发生事件时调用，除非将此参数设置为 HL_OBJECT_ANY，在这种情况下，回调将独立于任何对象调用。</param>
         /// <param name="thread">要调用回调函数的线程</param>
         /// <param name="fn">回调函数</param>
         /// <param name="pUserData">回调函数的数据指针</param>
@@ -1545,7 +1595,7 @@ namespace OH4CSharp.HL
 
         /// <summary>
         /// 为订阅的所有事件调用回调函数，以及自上次调用hlCheckEvents()以来发生的所有事件调用回调函数。
-        /// <para></para>
+        /// <para>hlCheckEvents()可以在开始/结束帧对之外调用。它可以代替开始/结束帧来更新设备和事件状态。例如，如果用户感觉是一个静态场景，并且只需要定期更新设备状态信息，那么他可以放弃调用hlBegin()/EndFrame()，而是定期调用hlCheckEvents()。</para>
         /// <see cref="HLAPI.hlAddEventCallback"/>
         /// <see cref="HLAPI.hlRemoveEventCallback"/>
         /// <see cref="HLAPI.hlEventd"/>

@@ -7,8 +7,6 @@ using System.Runtime.InteropServices;
 
 namespace OH4CSharp.HL
 {
-    
-
     #region HL Error / Error Codes
     /// <summary>
     /// HL错误结构数据
@@ -480,7 +478,7 @@ namespace OH4CSharp.HL
         HL_EFFECT_PROPERTY_GAIN,
 
         /// <summary>
-        /// 使用的常数,弹簧、摩擦和粘滞效应类型。表示这些影响所产生的最大力的上限。
+        /// 使用的常数、弹簧、摩擦和粘滞效应类型。表示这些影响所产生的最大力的上限。
         /// </summary>
         HL_EFFECT_PROPERTY_MAGNITUDE,
 
@@ -503,6 +501,17 @@ namespace OH4CSharp.HL
         /// 用于常数效应。表示恒力矢量的方向。
         /// </summary>
         HL_EFFECT_PROPERTY_DIRECTION,
+    }
+
+    /// <summary>
+    /// Table B-25: hlProxydv
+    /// </summary>
+    public enum HLProxyParams
+    {
+        /// <summary>
+        /// 在世界坐标中设置代理的位置。如果启用代理解析，此调用将没有效果。
+        /// </summary>
+        HL_PROXY_POSITION,
     }
 
     /// <summary>
