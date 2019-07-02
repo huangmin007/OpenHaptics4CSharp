@@ -36,7 +36,50 @@ namespace OH4CSharp.Utilities
         /// HHD
         /// </summary>
         [MarshalAs(UnmanagedType.U4)]
-        public UInt32 HHD;
+        public uint HHD;
+
+        public Vector3D(double x = 0.0, double y = 0.0, double z = 0.0)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            HHD = 0;
+        }
+
+        /// <summary>
+        /// 将 x,y,z 设置为 0
+        /// </summary>
+        public void ResetZero()
+        {
+            X = 0.0;
+            Y = 0.0;
+            Z = 0.0;
+        }
+        #region Vector3D Operator
+        public static Vector3D operator- (Vector3D vec1, Vector3D vec2)
+        {
+            return new Vector3D(vec1.X - vec2.X, vec1.Y - vec2.Y, vec1.Z - vec2.Z);
+        }
+
+        public static Vector3D operator/ (Vector3D vec1, Vector3D vec2)
+        {
+            return new Vector3D(vec1.X / vec2.X, vec1.Y / vec2.Y, vec1.Z / vec2.Z);
+        }
+
+        public static Vector3D operator/ (Vector3D vec, double s)
+        {
+            return new Vector3D(vec.X / s, vec.Y / s, vec.Z / s);
+        }
+
+        public static Vector3D operator* (Vector3D vec, double s)
+        {
+            return new Vector3D(vec.X * s, vec.Y * s, vec.Z *s);
+        }
+        public static Vector3D operator* (double s, Vector3D vec)
+        {
+            return new Vector3D(vec.X * s, vec.Y * s, vec.Z * s);
+        }
+        #endregion
 
         #region Vector3D Static Fucntions
 
@@ -63,8 +106,17 @@ namespace OH4CSharp.Utilities
             res.Y = vec1.Y - vec2.Y;
             res.Z = vec1.Z - vec2.Z;
         }
+        public static void Subtrace(ref double[] res, double[] vec1, double[] vec2)
+        {
+            if (res.Length != 3 || vec1.Length != 3 || vec2.Length != 3)
+                throw new ArgumentException("数组长度必须为 3 ");
 
-        public static void Scale(ref Vector3D res, Vector3D vec1, double s)
+            res[0] = vec1[0] - vec2[0];
+            res[1] = vec1[1] - vec2[1];
+            res[2] = vec1[2] - vec2[2];
+        }
+
+        public static void Scale(ref Vector3D res, ref Vector3D vec1, double s)
         {
             res.X = vec1.X * s;
             res.Y = vec1.Y * s;
@@ -76,6 +128,12 @@ namespace OH4CSharp.Utilities
             res.X *= s;
             res.Y *= s;
             res.Z *= s;
+        }
+        public static void ScaleInPlace(ref double[] res, double s)
+        {
+            res[0] *= s;
+            res[1] *= s;
+            res[2] *= s;
         }
 
         public static void ScaleNonUniform(ref Vector3D res, Vector3D vec1, Vector3D vec2)
@@ -94,7 +152,7 @@ namespace OH4CSharp.Utilities
 
         public static void Normalize(ref Vector3D res, ref Vector3D vec1)
         {
-            Scale(ref res, vec1, 1.0 / Magnitude(ref vec1));
+            Scale(ref res, ref vec1, 1.0 / Magnitude(ref vec1));
         }
 
         public static void NormalizeInPlace(ref Vector3D res)

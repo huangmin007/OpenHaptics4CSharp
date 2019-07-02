@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DDBAA5AB-3AAB-431B-99C9-46E2007D5198}</ProjectGuid>
+    <ProjectGuid>{DDCB1FA1-2116-4C7D-A077-DA4664DE113D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OH4CSharp2HDConsole</RootNamespace>
-    <AssemblyName>OH4CSharp2HDConsole</AssemblyName>
+    <RootNamespace>Example_HDSphere</RootNamespace>
+    <AssemblyName>Example_HDSphere</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OH4CSharpBridgeAPI\OH4CSharpBridgeAPI.csproj">
-      <Project>{fe2c76a5-09b6-4812-b6c8-37d80e91dc9c}</Project>
+      <Project>{FE2C76A5-09B6-4812-B6C8-37D80E91DC9C}</Project>
       <Name>OH4CSharpBridgeAPI</Name>
     </ProjectReference>
   </ItemGroup>

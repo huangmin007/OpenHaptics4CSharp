@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DDBAA5AB-3AAB-431B-99C9-46E2007D5198}</ProjectGuid>
+    <ProjectGuid>{A53F12B3-FB01-4C3E-A07A-D0CEDEAC977D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OH4CSharp2HDConsole</RootNamespace>
-    <AssemblyName>OH4CSharp2HDConsole</AssemblyName>
+    <RootNamespace>Example_HDDevice_Hello</RootNamespace>
+    <AssemblyName>Example_HDDevice_Hello</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

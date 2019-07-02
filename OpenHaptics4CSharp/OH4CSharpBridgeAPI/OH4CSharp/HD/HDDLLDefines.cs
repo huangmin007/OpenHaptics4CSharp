@@ -7,6 +7,16 @@ using System.Text;
 namespace OH4CSharp.HD
 {
 
+    /// <summary>
+    /// 调度程序操作函数类型，用于定义要在调度程序线程中运行的操作。
+    /// <para>由 hdSchedulerSynchronous() 或 hdschedulesynchronous() 调度，然后在下一个调度器计时期间运行该操作，
+    /// 如果没有启动调度器，则立即执行同步操作。返回值控制操作在运行后终止还是在下一个调度程序滴答中再次运行。
+    /// 一个周期性的操作，即一个不确定执行的操作，当它最终被取消调度时，应该返回 HDCallbackCode.HD_CALLBACK_DONE。</para>
+    /// </summary>
+    /// <param name="pUserData">操作使用的数据，在计划操作时创建</param>
+    /// <returns></returns>
+    public delegate HDCallbackCode HDSchedulerCallback(IntPtr pUserData);
+
     #region HDErrorInfo/HDErrorCodes
     /// <summary>
     /// 设备错误信息/或执行信息（也可理解为函数调用返回的信息，一不定完全理解为"错误信息"）
@@ -17,8 +27,8 @@ namespace OH4CSharp.HD
         /// <summary>
         /// 错误代码
         /// </summary>
-        uint ErrorCode;
-        //HDErrorCodes errorCode;
+        //uint ErrorCode;
+        HDErrorCodes ErrorCode;
 
         /// <summary>
         /// 内部代码可用于从设备供应商获得额外的支持
@@ -37,6 +47,44 @@ namespace OH4CSharp.HD
         public bool CheckedError()
         {
             return ErrorCode != 0x0000;
+        }
+
+        /// <summary>
+        /// 是否是力的错误
+        /// </summary>
+        /// <returns></returns>
+        public bool IsForceError()
+        {
+            switch(ErrorCode)
+            {
+                case HDErrorCodes.HD_WARM_MOTORS:
+                case HDErrorCodes.HD_EXCEEDED_MAX_FORCE:
+                case HDErrorCodes.HD_EXCEEDED_MAX_VELOCITY:
+                case HDErrorCodes.HD_FORCE_ERROR:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+        /// <summary>
+        /// 是否是调度器的错误
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSchedulerError()
+        {
+            switch(ErrorCode)
+            {
+                case HDErrorCodes.HD_COMM_ERROR:
+                case HDErrorCodes.HD_COMM_CONFIG_ERROR:
+                case HDErrorCodes.HD_TIMER_ERROR:
+                case HDErrorCodes.HD_INVALID_PRIORITY:
+                case HDErrorCodes.HD_SCHEDULER_FULL:
+                    return true;
+
+                default:
+                    return false;
+            }
         }
 
         /// <summary>

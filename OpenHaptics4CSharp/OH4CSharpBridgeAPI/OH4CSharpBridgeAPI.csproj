@@ -61,7 +61,7 @@
     <Compile Include="OH4CSharp\HD\HDDLLFunctions.cs" />
     <Compile Include="OH4CSharp\HL\HLDLLDefines.cs" />
     <Compile Include="OH4CSharp\HL\HLDLLFunctions.cs" />
-    <Compile Include="OH4CSharp\Utilities\HDDLLUtils.cs" />
+    <Compile Include="OH4CSharp\Utilities\OHUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

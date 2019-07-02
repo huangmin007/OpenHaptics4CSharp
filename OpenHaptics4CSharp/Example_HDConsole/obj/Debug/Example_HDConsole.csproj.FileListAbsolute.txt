@@ -1,0 +1,7 @@
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HDConsole\bin\Debug\OH4CSharp2HDConsole.exe
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HDConsole\bin\Debug\OH4CSharp2HDConsole.pdb
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HDConsole\bin\Debug\OH4CSharpBridge.dll
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HDConsole\bin\Debug\OH4CSharpBridge.pdb
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HDConsole\obj\Debug\Example_HDConsole.csprojResolveAssemblyReference.cache
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HDConsole\obj\Debug\OH4CSharp2HDConsole.exe
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HDConsole\obj\Debug\OH4CSharp2HDConsole.pdb

@@ -7,6 +7,22 @@ using System.Runtime.InteropServices;
 
 namespace OH4CSharp.HL
 {
+    /// <summary>
+    /// HL Callback Process
+    /// </summary>
+    public delegate void HLCallbackProc();
+
+    /// <summary>
+    /// 未测试
+    /// </summary>
+    /// <param name="evt">DLLEnumToIntPtr<HLCallbackEvents>(event)</param>
+    /// <param name="obj"></param>
+    /// <param name="thread">DLLEnumToIntPtr<HLCallbackThreads>(pthread)</param>
+    /// <param name="cache"></param>
+    /// <param name="pUserData"></param>
+    public delegate void HLEventProc(IntPtr evt, uint obj, IntPtr thread, IntPtr cache, IntPtr pUserData);
+
+
     #region HL Error / Error Codes
     /// <summary>
     /// HL错误结构数据
@@ -577,4 +593,5 @@ namespace OH4CSharp.HL
         HL_EVENT_MOTION_LINEAR_TOLERANCE,
         HL_EVENT_MOTION_ANGULAR_TOLERANCE,
     }
+
 }

@@ -7,21 +7,12 @@ using System.Text;
 namespace OH4CSharp.HD
 {
     /// <summary>
-    /// 调度程序操作函数类型，用于定义要在调度程序线程中运行的操作。
-    /// <para>由 hdSchedulerSynchronous() 或 hdschedulesynchronous() 调度，然后在下一个调度器计时期间运行该操作，
-    /// 如果没有启动调度器，则立即执行同步操作。返回值控制操作在运行后终止还是在下一个调度程序滴答中再次运行。
-    /// 一个周期性的操作，即一个不确定执行的操作，当它最终被取消调度时，应该返回 HDCallbackCode.HD_CALLBACK_DONE。</para>
-    /// </summary>
-    /// <param name="pUserData">操作使用的数据，在计划操作时创建</param>
-    /// <returns></returns>
-    public delegate HDCallbackCode HDSchedulerCallback(IntPtr pUserData);
-
-    /// <summary>
     /// HDAPI是触觉的低级别的基础层。适合已经熟悉触觉的开发人员。
     /// <para>是设备通信数据与上层软件的第一层底封装(程序接口)</para>
     /// </summary>
-    public class HDAPI
+    public partial class HDAPI
     {
+
         static HDAPI()
         {
             //Console.WriteLine("Static HDAPI Constructor.");
@@ -302,6 +293,20 @@ namespace OH4CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
+        //[DllImport(DLL_PATH)]
+        //public static extern void hdGetDoublev(HDGetParameters pname, ref Utilities.Vector3D value);
+        /// <summary>
+        /// 跟据参数名称/参数编码/参数ID返回对应的值
+        /// </summary>
+        /// <param name="pname">参数名称/参数编码/参数ID</param>
+        /// <param name="value">输出/返回值</param>
+        [DllImport(DLL_PATH)]
+        public static extern void hdGetDoublev(HDGetParameters pname, out Utilities.Vector3D value);
+        /// <summary>
+        /// 跟据参数名称/参数编码/参数ID返回对应的值
+        /// </summary>
+        /// <param name="pname">参数名称/参数编码/参数ID</param>
+        /// <param name="value">输出/返回值</param>
         [DllImport(DLL_PATH)]
         public static extern void hdGetDoublev(HDGetParameters pname, double[] value);
         /// <summary>
@@ -411,6 +416,13 @@ namespace OH4CSharp.HD
         /// <param name="value">输入/设置的值</param>
         [DllImport(DLL_PATH)]
         public static extern void hdSetDoublev(HDSetParameters pname, IntPtr value);
+        /// <summary>
+        /// 设置参数名称/参数编码/参数ID对应的值
+        /// </summary>
+        /// <param name="pname">参数名称/参数编码/参数ID</param>
+        /// <param name="value">输入/设置的值</param>
+        [DllImport(DLL_PATH)]
+        public static extern void hdSetDoublev(HDSetParameters pname, ref Utilities.Vector3D value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>

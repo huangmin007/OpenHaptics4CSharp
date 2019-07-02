@@ -8,22 +8,6 @@ using System.Text;
 namespace OH4CSharp.HL
 {
     /// <summary>
-    /// HL Callback Process
-    /// </summary>
-    public delegate void HLCallbackProc();
-
-    /// <summary>
-    /// 未测试
-    /// </summary>
-    /// <param name="evt">DLLEnumToIntPtr<HLCallbackEvents>(event)</param>
-    /// <param name="obj"></param>
-    /// <param name="thread">DLLEnumToIntPtr<HLCallbackThreads>(pthread)</param>
-    /// <param name="cache"></param>
-    /// <param name="pUserData"></param>
-    public delegate void HLEventProc(IntPtr evt, uint obj, IntPtr thread, IntPtr cache, IntPtr pUserData);
-
-
-    /// <summary>
     /// HLAPI是为高级触觉场景渲染而设计的。它针对的是高级OpenGL开发人员，熟悉触觉编程，但希望能快速轻松地将触觉添加到现有的图形应用程序中。
     /// <para>HLAPI构建在HDAPI之上，以牺牲灵活性为代价，提供比HDAPI更高级别的触觉控制，HLAPI主要是为那些精通OpenGL编程的人设计的。</para>
     /// <para>例如：HLAPI程序员不必担心设计力方程等低级问题，处理线程安全并实现高效的数据结构进行触觉渲染。
@@ -33,6 +17,7 @@ namespace OH4CSharp.HL
     /// </summary>
     public partial class HLAPI
     {
+        
         static HLAPI()
         {
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
