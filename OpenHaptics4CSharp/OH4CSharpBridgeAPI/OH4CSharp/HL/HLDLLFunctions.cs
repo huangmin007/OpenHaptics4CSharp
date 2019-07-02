@@ -528,6 +528,13 @@ namespace OH4CSharp.HL
         public static extern void hlEndShape();
 
         /// <summary>
+        /// hl Call Shape
+        /// </summary>
+        /// <param name="shape"></param>
+        [DllImport(DLL_PATH, EntryPoint = "hlCallShape")]
+        public static extern void hlCallShape(uint shape);
+
+        /// <summary>
         /// 释放hlGenShapes创建的惟一标识符。
         /// <para>删除范围[shape, shape+range-1]中的所有连续形状标识符。</para>
         /// <see cref="HLAPI.hlGenShapes"/>
@@ -1424,6 +1431,30 @@ namespace OH4CSharp.HL
         public static void hlMatrixMode(HLMatrixModeParams mode) { _hlMatrixMode(DLLEnumToIntPtr(mode)); }
         [DllImport(DLL_PATH, EntryPoint = "hlMatrixMode")]
         private static extern void _hlMatrixMode(IntPtr mode);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixf")]
+        public static extern void hlMultMatrixf(IntPtr m);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixf")]
+        public static extern void hlMultMatrixf(float[] m);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixf")]
+        public static extern void hlMultMatrixf(ref float[] m);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixf")]
+        public static extern void hlMultMatrixf(ref float m);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixd")]
+        public static extern void hlMultMatrixd(IntPtr m);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixd")]
+        public static extern void hlMultMatrixd(double[] m);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixd")]
+        public static extern void hlMultMatrixd(ref double[] m);
+
+        [DllImport(DLL_PATH, EntryPoint = "hlMultMatrixd")]
+        public static extern void hlMultMatrixd(ref double m);
 
         /// <summary>
         /// 设置触觉视图卷，该视图卷决定如何将触觉设备的工作区映射到图形视图卷。
