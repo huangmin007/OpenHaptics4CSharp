@@ -45,145 +45,242 @@ namespace OH4CSharp.Utilities
             Z = z;
             HHD = 0;
         }
-
-        /// <summary>
-        /// 将 x,y,z 设置为 0
-        /// </summary>
+        
         public void ResetZero()
         {
             X = 0.0;
             Y = 0.0;
             Z = 0.0;
         }
-        #region Vector3D Operator
-        public static Vector3D operator- (Vector3D vec1, Vector3D vec2)
+
+        public bool IsZero(double epsilon)
         {
-            return new Vector3D(vec1.X - vec2.X, vec1.Y - vec2.Y, vec1.Z - vec2.Z);
+            return Math.Abs(X) < epsilon && Math.Abs(Y) < epsilon && Math.Abs(Z) < epsilon;
         }
 
-        public static Vector3D operator/ (Vector3D vec1, Vector3D vec2)
+        public double Magnitude()
         {
-            return new Vector3D(vec1.X / vec2.X, vec1.Y / vec2.Y, vec1.Z / vec2.Z);
+            return Math.Sqrt(X * X + Y * Y + Z * Z);
         }
 
-        public static Vector3D operator/ (Vector3D vec, double s)
+        public double this[int index]
         {
-            return new Vector3D(vec.X / s, vec.Y / s, vec.Z / s);
+            get
+            {
+                switch(index)
+                {
+                    case 0:return X;
+                    case 1:return Y;
+                    case 2:return Z;
+                    default:throw new ArgumentException("超出索引范围 3.");
+                }
+            }
+            set
+            {
+                switch(index)
+                {
+                    case 0:X = value;return;
+                    case 1:Y = value;return;
+                    case 2:Z = value;return;
+                    default: throw new ArgumentException("超出索引范围 3.");
+                }
+            }
         }
 
-        public static Vector3D operator* (Vector3D vec, double s)
+        #region Vector3D Override Operator 如果需要自已写
+        public static Vector3D operator+ (Vector3D v1, Vector3D v2)
         {
-            return new Vector3D(vec.X * s, vec.Y * s, vec.Z *s);
+            return new Vector3D(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
         }
-        public static Vector3D operator* (double s, Vector3D vec)
+        public static Vector3D operator+ (Vector3D v1, double[] d)
+        {
+            if (d.Length != 3)throw new ArgumentException("数组长度必须为 3 ");
+            return new Vector3D(v1.X + d[0], v1.Y + d[1], v1.Z + d[2]);
+        }
+        public static Vector3D operator+ (double[] d, Vector3D v1)
+        {
+            if (d.Length != 3) throw new ArgumentException("数组长度必须为 3 ");
+            return new Vector3D(v1.X + d[0], v1.Y + d[1], v1.Z + d[2]);
+        }
+
+        public static Vector3D operator- (Vector3D v1, Vector3D v2)
+        {
+            return new Vector3D(v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z);
+        }
+        public static Vector3D operator- (Vector3D v1, double[] d)
+        {
+            if (d.Length != 3) throw new ArgumentException("数组长度必须为 3 ");
+            return new Vector3D(v1.X - d[0], v1.Y - d[1], v1.Z - d[2]);
+        }
+        public static Vector3D operator -(double[] d, Vector3D v1)
+        {
+            if (d.Length != 3) throw new ArgumentException("数组长度必须为 3 ");
+            return new Vector3D(d[0] - v1.X, d[1] - v1.Y, d[2] - v1.Z);
+        }
+
+        public static Vector3D operator* (Vector3D v1, Vector3D v2)
+        {
+            return new Vector3D(v1.X * v2.X, v1.Y * v2.Y, v1.Z * v2.Z);
+        }
+        public static Vector3D operator *(Vector3D v1, double s)
+        {
+            return new Vector3D(v1.X * s, v1.Y * s, v1.Z * s);
+        }
+        public static Vector3D operator *(double s, Vector3D vec)
         {
             return new Vector3D(vec.X * s, vec.Y * s, vec.Z * s);
         }
+
+        public static Vector3D operator/ (Vector3D v1, Vector3D v2)
+        {
+            return new Vector3D(v1.X / v2.X, v1.Y / v2.Y, v1.Z / v2.Z);
+        }
+        public static Vector3D operator/ (Vector3D v1, double s)
+        {
+            return new Vector3D(v1.X / s, v1.Y / s, v1.Z / s);
+        }
+
+        public static bool operator== (Vector3D v1, Vector3D v2)
+        {
+            return v1.X == v2.X && v1.Y == v2.Y && v1.Z == v2.Z;
+        }
+        public static bool operator !=(Vector3D v1, Vector3D v2)
+        {
+            return v1.X != v2.X || v1.Y != v2.Y || v1.Z != v2.Z;
+        }
+
         #endregion
 
-        #region Vector3D Static Fucntions
+        #region Vector3D Static Fucntions 如果有需要自已写重载
 
-        public static double Magnitude(ref Vector3D vec)
+        public static double Magnitude(ref Vector3D v3d)
         {
-            return Math.Sqrt(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
+            return Math.Sqrt(v3d.X * v3d.X + v3d.Y * v3d.Y + v3d.Z * v3d.Z);
+        }
+        public static double Magnitude(ref double[] v3d)
+        {
+            if (v3d.Length != 3) throw new ArgumentException("数据长度应为3.");
+            return Math.Sqrt(v3d[0] * v3d[0] + v3d[1] * v3d[1] + v3d[2] * v3d[2]);
         }
 
-        public static Boolean IsZero(ref Vector3D vec, double epsilon)
+        public static Boolean IsZero(ref Vector3D v3d, double epsilon)
         {
-            return Math.Abs(vec.X) < epsilon && Math.Abs(vec.Y) < epsilon && Math.Abs(vec.Z) < epsilon;
+            return Math.Abs(v3d.X) < epsilon && Math.Abs(v3d.Y) < epsilon && Math.Abs(v3d.Z) < epsilon;
+        }
+        public static Boolean IsZero(ref double[] v3d, double epsilon)
+        {
+            if (v3d.Length != 3) throw new ArgumentException("数据长度应为3.");
+            return Math.Abs(v3d[0]) < epsilon && Math.Abs(v3d[1]) < epsilon && Math.Abs(v3d[2]) < epsilon;
         }
 
-        public static void Add(ref Vector3D res, ref Vector3D vec1, ref Vector3D vec2)
+        public static void Add(ref Vector3D v3d, ref Vector3D v1, ref Vector3D v2)
         {
-            res.X = vec1.X + vec2.X;
-            res.Y = vec1.Y + vec2.Y;
-            res.Z = vec1.Z + vec2.Z;
+            v3d.X = v1.X + v2.X;
+            v3d.Y = v1.Y + v2.Y;
+            v3d.Z = v1.Z + v2.Z;
+        }
+        public static void Add(ref double[] v3d, ref double[] v1, ref double[] v2)
+        {
+            if(v3d.Length != 3 || v1.Length != 3 || v2.Length != 3)
+                throw new ArgumentException("数组长度必须为 3 ");
+            v3d[0] = v1[0] + v2[0];
+            v3d[1] = v1[1] + v2[1];
+            v3d[2] = v1[2] + v2[2];
         }
 
-        public static void Subtrace(ref Vector3D res, ref Vector3D vec1, ref Vector3D vec2)
+
+        public static void Subtrace(ref Vector3D v3d, ref Vector3D v1, ref Vector3D v2)
         {
-            res.X = vec1.X - vec2.X;
-            res.Y = vec1.Y - vec2.Y;
-            res.Z = vec1.Z - vec2.Z;
+            v3d.X = v1.X - v2.X;
+            v3d.Y = v1.Y - v2.Y;
+            v3d.Z = v1.Z - v2.Z;
         }
-        public static void Subtrace(ref double[] res, double[] vec1, double[] vec2)
+        public static void Subtrace(ref double[] v3d, double[] v1, double[] v2)
         {
-            if (res.Length != 3 || vec1.Length != 3 || vec2.Length != 3)
+            if (v3d.Length != 3 || v1.Length != 3 || v2.Length != 3)
                 throw new ArgumentException("数组长度必须为 3 ");
 
-            res[0] = vec1[0] - vec2[0];
-            res[1] = vec1[1] - vec2[1];
-            res[2] = vec1[2] - vec2[2];
+            v3d[0] = v1[0] - v2[0];
+            v3d[1] = v1[1] - v2[1];
+            v3d[2] = v1[2] - v2[2];
         }
 
-        public static void Scale(ref Vector3D res, ref Vector3D vec1, double s)
+        public static void Scale(ref Vector3D v3d, ref Vector3D v1, double s)
         {
-            res.X = vec1.X * s;
-            res.Y = vec1.Y * s;
-            res.Z = vec1.Z * s;
+            v3d.X = v1.X * s;
+            v3d.Y = v1.Y * s;
+            v3d.Z = v1.Z * s;
+        }
+        public static void Scale(ref double[] v3d, ref double[] v1, double s)
+        {
+            if (v3d.Length != 3 || v1.Length != 3)
+                throw new ArgumentException("数组长度必须为 3 ");
+            v3d[0] = v1[0] * s;
+            v3d[1] = v1[1] * s;
+            v3d[2] = v1[2] * s;
         }
 
-        public static void ScaleInPlace(ref Vector3D res, double s)
+        public static void ScaleInPlace(ref Vector3D v3d, double s)
         {
-            res.X *= s;
-            res.Y *= s;
-            res.Z *= s;
+            v3d.X *= s;
+            v3d.Y *= s;
+            v3d.Z *= s;
         }
-        public static void ScaleInPlace(ref double[] res, double s)
+        public static void ScaleInPlace(ref double[] v3d, double s)
         {
-            res[0] *= s;
-            res[1] *= s;
-            res[2] *= s;
-        }
-
-        public static void ScaleNonUniform(ref Vector3D res, Vector3D vec1, Vector3D vec2)
-        {
-            res.X = vec1.X * vec2.X;
-            res.Y = vec1.Y * vec2.Y;
-            res.Z = vec1.Z * vec2.Z;
+            if (v3d.Length != 3) throw new ArgumentException("数组长度必须为 3 ");
+            v3d[0] *= s;
+            v3d[1] *= s;
+            v3d[2] *= s;
         }
 
-        public static void ScaleNonUniformInPlace(ref Vector3D res, Vector3D vec1)
+        public static void ScaleNonUniform(ref Vector3D v3d, Vector3D v1, Vector3D v2)
         {
-            res.X = res.X * vec1.X;
-            res.Y = res.Y * vec1.Y;
-            res.Z = res.Z * vec1.Z;
+            v3d.X = v1.X * v2.X;
+            v3d.Y = v1.Y * v2.Y;
+            v3d.Z = v1.Z * v2.Z;
         }
 
-        public static void Normalize(ref Vector3D res, ref Vector3D vec1)
+
+        public static void ScaleNonUniformInPlace(ref Vector3D v3d, Vector3D v1)
         {
-            Scale(ref res, ref vec1, 1.0 / Magnitude(ref vec1));
+            v3d.X = v3d.X * v1.X;
+            v3d.Y = v3d.Y * v1.Y;
+            v3d.Z = v3d.Z * v1.Z;
         }
 
-        public static void NormalizeInPlace(ref Vector3D res)
+        public static void Normalize(ref Vector3D v3d, ref Vector3D v1)
         {
-            double mag = Magnitude(ref res);
+            Scale(ref v3d, ref v1, 1.0 / Magnitude(ref v1));
+        }
+
+        public static void NormalizeInPlace(ref Vector3D v3d)
+        {
+            double mag = Magnitude(ref v3d);
             if (mag == 0) return;
-            ScaleInPlace(ref res, 1.0 / mag);
+            ScaleInPlace(ref v3d, 1.0 / mag);
         }
 
-        public static void CrossProduct(ref Vector3D res, ref Vector3D vec1, ref Vector3D vec2)
+        public static void CrossProduct(ref Vector3D v3d, ref Vector3D v1, ref Vector3D v2)
         {
-            res.X = vec1.Y * vec2.Z - vec1.Z * vec2.Y;
-            res.Y = vec1.Z * vec2.X - vec1.X * vec2.Z;
-            res.Z = vec1.X * vec2.Y - vec1.Y * vec2.X;
+            v3d.X = v1.Y * v2.Z - v1.Z * v2.Y;
+            v3d.Y = v1.Z * v2.X - v1.X * v2.Z;
+            v3d.Z = v1.X * v2.Y - v1.Y * v2.X;
         }
 
-        public static double DotProduct(ref Vector3D vec1, ref Vector3D vec2)
+        public static double DotProduct(ref Vector3D v1, ref Vector3D v2)
         {
-            return vec1.X * vec2.X + vec1.Y * vec2.Y + vec1.Z * vec2.Z;
+            return v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z;
         }
 
-        public static double Distance(ref Vector3D vec1, ref Vector3D vec2)
+        public static double Distance(ref Vector3D v1, ref Vector3D v2)
         {
             Vector3D v3 = new Vector3D();
-            Subtrace(ref v3, ref vec1, ref vec2);
+            Subtrace(ref v3, ref v1, ref v2);
             return Magnitude(ref v3);
         }
 
-
         #endregion
-
     }
 
     /// <summary>

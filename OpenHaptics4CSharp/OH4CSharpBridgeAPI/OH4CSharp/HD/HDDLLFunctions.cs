@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OH4CSharp.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -293,15 +294,8 @@ namespace OH4CSharp.HD
         /// </summary>
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输出/返回值</param>
-        //[DllImport(DLL_PATH)]
-        //public static extern void hdGetDoublev(HDGetParameters pname, ref Utilities.Vector3D value);
-        /// <summary>
-        /// 跟据参数名称/参数编码/参数ID返回对应的值
-        /// </summary>
-        /// <param name="pname">参数名称/参数编码/参数ID</param>
-        /// <param name="value">输出/返回值</param>
         [DllImport(DLL_PATH)]
-        public static extern void hdGetDoublev(HDGetParameters pname, out Utilities.Vector3D value);
+        public static extern void hdGetDoublev(HDGetParameters pname, ref Vector3D value);
         /// <summary>
         /// 跟据参数名称/参数编码/参数ID返回对应的值
         /// </summary>
@@ -422,7 +416,7 @@ namespace OH4CSharp.HD
         /// <param name="pname">参数名称/参数编码/参数ID</param>
         /// <param name="value">输入/设置的值</param>
         [DllImport(DLL_PATH)]
-        public static extern void hdSetDoublev(HDSetParameters pname, ref Utilities.Vector3D value);
+        public static extern void hdSetDoublev(HDSetParameters pname, ref Vector3D value);
         /// <summary>
         /// 设置参数名称/参数编码/参数ID对应的值
         /// </summary>

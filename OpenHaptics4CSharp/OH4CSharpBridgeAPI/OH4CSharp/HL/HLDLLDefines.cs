@@ -7,21 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace OH4CSharp.HL
 {
-    /// <summary>
-    /// HL Callback Process
-    /// </summary>
-    public delegate void HLCallbackProc();
-
-    /// <summary>
-    /// 未测试
-    /// </summary>
-    /// <param name="evt">DLLEnumToIntPtr<HLCallbackEvents>(event)</param>
-    /// <param name="obj"></param>
-    /// <param name="thread">DLLEnumToIntPtr<HLCallbackThreads>(pthread)</param>
-    /// <param name="cache"></param>
-    /// <param name="pUserData"></param>
-    public delegate void HLEventProc(IntPtr evt, uint obj, IntPtr thread, IntPtr cache, IntPtr pUserData);
-
+    
 
     #region HL Error / Error Codes
     /// <summary>
@@ -43,6 +29,11 @@ namespace OH4CSharp.HL
         public String GetErrorCodeString()
         {
             return Marshal.PtrToStringAnsi(errorCode);
+        }
+
+        public bool CheckedError()
+        {
+            return Marshal.PtrToStringAnsi(errorCode) != "HL_NO_ERROR";
         }
 
         public static string GetErrorCodeString(HLError error)

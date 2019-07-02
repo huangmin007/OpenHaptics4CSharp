@@ -8,6 +8,33 @@ using System.Text;
 namespace OH4CSharp.HL
 {
     /// <summary>
+    /// HL Callback Process
+    /// </summary>
+    public delegate void HLCallbackProc();
+    /*
+    /// <summary>
+    /// 事件回调处理代理函数
+    /// </summary>
+    /// <param name="evt">DLLEnumToIntPtr<HLCallbackEvents>(event)</param>
+    /// <param name="obj"></param>
+    /// <param name="thread">DLLEnumToIntPtr<HLCallbackThreads>(pthread)</param>
+    /// <param name="cache"></param>
+    /// <param name="pUserData"></param>
+    public delegate void HLEventProc(IntPtr evt, uint obj, IntPtr thread, IntPtr cache, IntPtr pUserData);
+    */
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callbackEvent">HLCallbackEvents</param>
+    /// <param name="obj"></param>
+    /// <param name="callbackThread">HLCallbackThreads</param>
+    /// <param name="cache"></param>
+    /// <param name="pUserData"></param>
+    public delegate void HLEventProc(String callbackEvent, uint obj, String callbackThread, IntPtr cache, IntPtr pUserData);
+
+
+    /// <summary>
     /// HLAPI是为高级触觉场景渲染而设计的。它针对的是高级OpenGL开发人员，熟悉触觉编程，但希望能快速轻松地将触觉添加到现有的图形应用程序中。
     /// <para>HLAPI构建在HDAPI之上，以牺牲灵活性为代价，提供比HDAPI更高级别的触觉控制，HLAPI主要是为那些精通OpenGL编程的人设计的。</para>
     /// <para>例如：HLAPI程序员不必担心设计力方程等低级问题，处理线程安全并实现高效的数据结构进行触觉渲染。
@@ -41,6 +68,7 @@ namespace OH4CSharp.HL
         /// </summary>
         public static readonly IntPtr DLL_IntPtr = WINAPI.LoadLibrary(DLL_PATH);
 
+
         /// <summary>
         /// 获取 HL C++ 常量/枚举对象的指针
         /// </summary>
@@ -62,6 +90,10 @@ namespace OH4CSharp.HL
         }
         #endregion
 
+        /// <summary>
+        /// Shape/Effect Id for Events
+        /// </summary>
+        public const int HL_OBJECT_ANY = 0x00;
 
         //====================================================STATE MAINTENANCE AND ACCESSORS
         #region hlCreateContext/hlDeleteContext/hlMakeCurrent/hlEnable/hlDisable/...
@@ -331,6 +363,19 @@ namespace OH4CSharp.HL
         [DllImport(DLL_PATH, EntryPoint = "hlGetIntegerv")]
         private static extern void _hlGetIntegerv(IntPtr pname, ref int value);
 
+        /// <summary>
+        /// hlBeginFrame()更新触觉设备的当前状态，并清除当前呈现的触觉原语集，为呈现新的或更新的原语集做准备。所有触觉原始渲染函数(即形状和效果)都必须在开始/结束帧对中完成。
+        /// <para>hlBeginFrame()还更新触觉渲染引擎使用的世界坐标参考系。默认情况下，hlBeginFrame()从OpenGL®中采样当前GL_MODELVIEW_MATRIX，为整个触觉框架提供一个世界坐标空间。</para>
+        /// <para>客户端或冲突线程中通过hlGet*()或hlCacheGet*()查询的所有位置、向量和转换都将转换到该世界坐标空间。通常，GL_MODELVIEW_MATRIX只包含呈现传递开始时的视图转换。</para>
+        /// </summary>
+        [DllImport(DLL_PATH, EntryPoint = "hlBeginFrame")]
+        public static extern void hlBeginFrame();
+
+        /// <summary>
+        /// hlEndFrame()将自最后一个hlBeginFrame()以来指定的一组触觉原语(即形状、效果)刷新到触觉设备。所有触觉原始渲染函数必须在开始/结束帧对中完成。
+        /// </summary>
+        [DllImport(DLL_PATH, EntryPoint = "hlEndFrame")]
+        public static extern void hlEndFrame();
         #endregion
 
 
@@ -1244,9 +1289,9 @@ namespace OH4CSharp.HL
         /// <param name="type"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlTriggerEffect(HLTriggerEffectTypes type) { }
+        public static void hlTriggerEffect(HLTriggerEffectTypes type) { _hlTriggerEffect(DLLEnumToIntPtr(type)); }
         [DllImport(DLL_PATH, EntryPoint = "hlTriggerEffect")]
-        private static extern void hlTriggerEffect(IntPtr type);
+        private static extern void _hlTriggerEffect(IntPtr type);
 
         /// <summary>
         /// 用当前效果状态更新给定的活动效果。hlUpdateEffect()用于更改当前活动的效果的参数(已由hlStartEffect()启动)。

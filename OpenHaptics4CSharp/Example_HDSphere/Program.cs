@@ -54,8 +54,8 @@ namespace Example_HDSphere
             HDAPI.hdBeginFrame(hHD);
 
             //获取坐标位置
-            Vector3D position;
-            HDAPI.hdGetDoublev(HDGetParameters.HD_CURRENT_POSITION, out position);
+            Vector3D position = new Vector3D();
+            HDAPI.hdGetDoublev(HDGetParameters.HD_CURRENT_POSITION, ref position);
             //Console.WriteLine("{0}  {1}  {2}", position.X, position.Y, position.Z);
 
             //计算设备和球体中心之间的距离。
