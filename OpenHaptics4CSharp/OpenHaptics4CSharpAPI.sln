@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OH4CSharpBridgeAPI", "OH4CS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OH4CSharpTest", "OH4CSharpTest\OH4CSharpTest.csproj", "{701705EE-FA43-4042-8A44-B9452FA1D816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OH4CSharp2HDConsole", "OH4CSharp2HDConsole\OH4CSharp2HDConsole.csproj", "{DDBAA5AB-3AAB-431B-99C9-46E2007D5198}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example_HDConsole", "Example_HDConsole\Example_HDConsole.csproj", "{DDBAA5AB-3AAB-431B-99C9-46E2007D5198}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example_HD", "Example_HD", "{42EDDF8C-6592-4D86-B67A-B46CAB64211A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,5 +60,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DDBAA5AB-3AAB-431B-99C9-46E2007D5198} = {42EDDF8C-6592-4D86-B67A-B46CAB64211A}
 	EndGlobalSection
 EndGlobal

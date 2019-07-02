@@ -17,7 +17,7 @@ namespace OH4CSharp.HD
         /// <summary>
         /// 错误代码
         /// </summary>
-        UInt32 ErrorCode;
+        uint ErrorCode;
         //HDErrorCodes errorCode;
 
         /// <summary>
@@ -28,7 +28,16 @@ namespace OH4CSharp.HD
         /// <summary>
         /// 错误发生时处于活动状态的设备句柄
         /// </summary>
-        UInt32 HHD;
+        uint HHD;
+
+        /// <summary>
+        /// 错误检查，返回 true 表示有错误
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckedError()
+        {
+            return ErrorCode != 0x0000;
+        }
 
         /// <summary>
         /// 检查是否发生错误

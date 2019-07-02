@@ -83,7 +83,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OH4CSharpBridgeAPI\OH4CSharpBridgeAPI.csproj">
       <Project>{fe2c76a5-09b6-4812-b6c8-37d80e91dc9c}</Project>
-      <Name>OH4CSharpAPI</Name>
+      <Name>OH4CSharpBridgeAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -42,7 +42,7 @@ namespace OH4CSharp.HD
         /// <summary>
         /// 无效设备句柄
         /// </summary>
-        public const UInt32 HD_INVALID_HANDLE = 0xFFFFFFFF;
+        public const uint HD_INVALID_HANDLE = 0xFFFFFFFF;
         #endregion
 
         //======================================================DEVICE ROUTINES 
@@ -68,7 +68,7 @@ namespace OH4CSharp.HD
         /// <param name="errorCode">HDErrorInfo 的属性 errorCode</param>
         /// <returns>返回错误代码解释的可读字符串指针</returns>
         [DllImport(DLL_PATH)]
-        public static extern IntPtr hdGetErrorString(UInt32 errorCode);
+        public static extern IntPtr hdGetErrorString(uint errorCode);
 
         /// <summary>
         /// 获取关联参数名称的字符串值。
@@ -99,7 +99,7 @@ namespace OH4CSharp.HD
         /// 如果 HD_DEFAULT_DEVICE 作为 hdDeviceName 传入，hdInitiDevice()将初始化它找到的第一个设备。</param>
         /// <returns>返回 HHD 设备句柄，在C++中 HHD 是 unsigned int 类型</returns>
         [DllImport(DLL_PATH)]
-        public static extern UInt32 hdInitDevice(String hdDeviceName);
+        public static extern uint hdInitDevice(String hdDeviceName);
 
         /// <summary>
         /// 禁用一个设备，之后不应使用设备句柄。使用设备进行清理时调用。通常是在停止调度程序并取消所有调度回调后的最后一次调用。
@@ -116,7 +116,7 @@ namespace OH4CSharp.HD
         /// </code>
         /// </example>
         [DllImport(DLL_PATH)]
-        public static extern void hdDisableDevice(UInt32 hHD);
+        public static extern void hdDisableDevice(uint hHD);
 
         /// <summary>
         /// 使设备为当前设备。所有后续特定于设备的操作，如获取和设置状态或查询设备信息，都将在此设备上执行，直到另一个设备变为当前状态。
@@ -128,7 +128,7 @@ namespace OH4CSharp.HD
         /// <param name="hHD">已初始化设备的设备句柄。</param>
         /// <exception cref="HD_INVALID_HANDLE">如果hHD为不引用启动的设备</exception>
         [DllImport(DLL_PATH)]
-        public static extern void hdMakeCurrentDevice(UInt32 hHD);
+        public static extern void hdMakeCurrentDevice(uint hHD);
 
         /// <summary>
         /// 获取当前设备的句柄。主要用于多设备应用程序中，以跟踪哪个设备是当前的，或用于需要设备句柄的调用。
@@ -138,7 +138,7 @@ namespace OH4CSharp.HD
         /// <returns>当前设备的句柄。</returns>
         /// <exception cref="HD_INVALID_HANDLE">没有当前设备，例如：还没有启动任何设备。</exception>
         [DllImport(DLL_PATH)]
-        public static extern UInt32 hdGetCurrentDevice();
+        public static extern uint hdGetCurrentDevice();
         #endregion
 
 
@@ -150,7 +150,7 @@ namespace OH4CSharp.HD
          * 
          * 对应：C#
          * 将 pname 进行分类，可自行扩展 hdGet 函数；
-         *      例：public static extern void hdGetIntegerv(UInt32 prop, IntPtr/int[]/ref int value);
+         *      例：public static extern void hdGetIntegerv(uint prop, IntPtr/int[]/ref int value);
          * prop：只要是无符号int类型值即可，已封装为 HDSetParameters 数据类型
          * value：是指针类型值，C#在安全编译的模式下有IntPtr、基本数据类型数组(数组可理解为指针)、和 ref 基本数据类型
          * 引用 ref 基本数据类型只能返回一个值，数组可以返回多组基本数据，IntPtr可以返回复杂数据(例如结构类型)
@@ -172,7 +172,7 @@ namespace OH4CSharp.HD
         /// <param name="hHD">已初始化设备的设备句柄</param>
         /// <exception cref="HDErrorCodes.HD_ILLEGAL_BEGIN">如果当前调度程序中的当前设备的帧已经完成。</exception>
         [DllImport(DLL_PATH)]
-        public static extern void hdBeginFrame(UInt32 hHD);
+        public static extern void hdBeginFrame(uint hHD);
 
         /// <summary>
         /// 结束了一个 haptics 帧。将力和其他状态写入设备，hdBeginFrame()和hdEndFrame()应该总是在同一个调度程序中配对。
@@ -185,7 +185,7 @@ namespace OH4CSharp.HD
         /// <param name="hHD">已初始化设备的设备句柄</param>
         /// <exception cref="HDErrorCodes.HD_ILLEGAL_END">如果没有正确地调用与相同设备句柄的hdBeginFrame()配对。</exception>
         [DllImport(DLL_PATH)]
-        public static extern void hdEndFrame(UInt32 hHD);
+        public static extern void hdEndFrame(uint hHD);
         #endregion
 
 
@@ -467,7 +467,7 @@ namespace OH4CSharp.HD
         /// </summary>
         /// <returns></returns>
         [DllImport(DLL_PATH)]
-        public static extern UInt32 hdCheckCalibrationStyle();
+        public static extern uint hdCheckCalibrationStyle();
 
         /// <summary>
         /// [API文档上没有注释]
