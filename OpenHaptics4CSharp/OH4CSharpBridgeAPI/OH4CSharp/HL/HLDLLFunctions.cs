@@ -86,7 +86,7 @@ namespace OH4CSharp.HL
             IntPtr ptr = WINAPI.GetProcAddress(DLL_IntPtr, name);
             if (ptr == IntPtr.Zero) return IntPtr.Zero;
 
-            return Marshal.ReadIntPtr(ptr); //返回 C++ 
+            return Marshal.ReadIntPtr(ptr); //返回 C++ 指针地址
         }
         #endregion
 
@@ -103,7 +103,7 @@ namespace OH4CSharp.HL
         /// <param name="hHD">设备句柄</param>
         /// <returns>返回下下文名柄</returns>
         [DllImport(DLL_PATH, EntryPoint = "hlCreateContext")]
-        public static extern IntPtr hlCreateContext(UInt32 hHD);
+        public static extern IntPtr hlCreateContext(uint hHD);
 
         /// <summary>
         /// 删除触觉反馈渲染的上下文(haptic rendering context)
@@ -128,7 +128,7 @@ namespace OH4CSharp.HL
         /// <param name="hHD">设备句柄</param>
         /// <returns>返回上下文 HHLRC </returns>
         [DllImport(DLL_PATH, EntryPoint = "hlContextDevice")]
-        public static extern IntPtr hlContextDevice(UInt32 hHD);
+        public static extern IntPtr hlContextDevice(uint hHD);
 
         /// <summary>
         /// 获取当前上下文
@@ -142,7 +142,7 @@ namespace OH4CSharp.HL
         /// </summary>
         /// <returns>返回设备句柄</returns>
         [DllImport(DLL_PATH, EntryPoint = "hlGetCurrentDevice")]
-        public static extern UInt32 hlGetCurrentDevice();
+        public static extern uint hlGetCurrentDevice();
 
         /// <summary>
         /// 启用或禁用当前呈现上下文的功能。
@@ -208,7 +208,7 @@ namespace OH4CSharp.HL
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM">如果target不是列出的值之一</exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_VALUE">如果值超出范围</exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION">如果当前没有触觉呈现上下文</exception>
-        public static void hlHinti(HLHintParameters target, int value) { _hlHinti(DLLEnumToIntPtr(target), value); }
+        public static void hlHint(HLHintParameters target, int value) { _hlHinti(DLLEnumToIntPtr(target), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlHinti")]
         private static extern void _hlHinti(IntPtr target, int value);
 
@@ -224,7 +224,7 @@ namespace OH4CSharp.HL
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM">如果target不是列出的值之一</exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_VALUE">如果值超出范围</exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION">如果当前没有触觉呈现上下文</exception>
-        public static void hlHintb(HLHintParameters target, bool value) { _hlHintb(DLLEnumToIntPtr(target), value ? (byte)0x01 : (byte)0x00); }
+        public static void hlHint(HLHintParameters target, bool value) { _hlHintb(DLLEnumToIntPtr(target), value ? (byte)0x01 : (byte)0x00); }
         [DllImport(DLL_PATH, EntryPoint = "hlHintb")]
         private static extern void _hlHintb(IntPtr target, byte value);
 
@@ -506,17 +506,17 @@ namespace OH4CSharp.HL
         /// <para>2.通过观察基于形状id的帧与帧之间的差异，可以对动态移动的几何图元进行正确的触觉呈现。</para>
         /// <para>在向触觉渲染器指定几何形状和回调函数之前使用。</para>
         /// <see cref="HLAPI.hlEndShape"/>
-        /// <see cref="HLAPI.hlHinti"/>
-        /// <see cref="HLAPI.hlHintb"/>
+        /// <see cref="HLAPI.hlHint"/>
+        /// <see cref="HLAPI.hlHint"/>
         /// <see cref="HLAPI.hlCallback"/>
         /// </summary>
         /// <param name="type">要指定的形状的类型</param>
         /// <param name="shape">指定从先前调用 hlGenShapes() 返回的形状的id</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlBeginShape(HLBeginShapeParams type, UInt32 shape) { _hlBeginShape(DLLEnumToIntPtr(type), shape); }
+        public static void hlBeginShape(HLBeginShapeParams type, uint shape) { _hlBeginShape(DLLEnumToIntPtr(type), shape); }
         [DllImport(DLL_PATH, EntryPoint = "hlBeginShape")]
-        private static extern void _hlBeginShape(IntPtr type, UInt32 shape);
+        private static extern void _hlBeginShape(IntPtr type, uint shape);
 
         /// <summary>
         /// 完成最后一次调用hlBeginShape()指定的形状。几何、材料、变换和形状的其他状态被捕获并发送到触觉渲染器。
@@ -546,7 +546,7 @@ namespace OH4CSharp.HL
         /// <exception cref="HLErrorCodes.HL_INVALID_VALUE">如果要释放的任何标识符以前都不是由glGenShapes()分配的</exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION">如果没有活动的触觉呈现上下文</exception>
         [DllImport(DLL_PATH, EntryPoint = "hlDeleteShapes")]
-        public static extern void hlDeleteShapes(UInt32 shape, int range);
+        public static extern void hlDeleteShapes(uint shape, int range);
 
         /// <summary>
         /// 确定标识符是否是有效的形状标识符。
@@ -559,7 +559,7 @@ namespace OH4CSharp.HL
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
         /// <returns>如果形状标识符是有效的分配值，则返回 TRUE（0x01）。</returns>
         [DllImport(DLL_PATH, EntryPoint = "hlIsShape")]
-        public static extern byte hlIsShape(UInt32 shape);
+        public static extern byte hlIsShape(uint shape);
 
         /// <summary>
         /// 对于形状，生成可与hlBeginShape()一起使用的唯一标识符。
@@ -572,7 +572,7 @@ namespace OH4CSharp.HL
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
         /// <returns>返回可以用作形状标识符的唯一整数。如果范围大于1，则返回值表示一系列范围连续惟一标识符中的第一个。</returns>
         [DllImport(DLL_PATH, EntryPoint = "hlGenShapes")]
-        public static extern UInt32 hlGenShapes(int range);
+        public static extern uint hlGenShapes(int range);
 
         /// <summary>
         /// 为触觉渲染器指定局部特征几何体
@@ -762,9 +762,9 @@ namespace OH4CSharp.HL
         /// <param name="value">返回正在查询的参数值的地址。</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetShapeBooleanv(UInt32 shapeId, HLGetShapeParams pname, IntPtr value) { _hlGetShapeBooleanv(shapeId, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetShapeBooleanv(uint shapeId, HLGetShapeParams pname, IntPtr value) { _hlGetShapeBooleanv(shapeId, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetShapeBooleanv")]
-        private static extern void _hlGetShapeBooleanv(UInt32 shapeId, IntPtr pname, IntPtr value);
+        private static extern void _hlGetShapeBooleanv(uint shapeId, IntPtr pname, IntPtr value);
 
         /// <summary>
         /// 允许查询特定形状的状态
@@ -780,9 +780,9 @@ namespace OH4CSharp.HL
         /// <param name="value">返回正在查询的参数值的地址。</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetShapeBooleanv(UInt32 shapeId, HLGetShapeParams pname, byte[] value) { _hlGetShapeBooleanv(shapeId, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetShapeBooleanv(uint shapeId, HLGetShapeParams pname, byte[] value) { _hlGetShapeBooleanv(shapeId, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetShapeBooleanv")]
-        private static extern void _hlGetShapeBooleanv(UInt32 shapeId, IntPtr pname, byte[] value);
+        private static extern void _hlGetShapeBooleanv(uint shapeId, IntPtr pname, byte[] value);
 
         /// <summary>
         /// 允许查询特定形状的状态
@@ -798,9 +798,9 @@ namespace OH4CSharp.HL
         /// <param name="value">返回正在查询的参数值的地址</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetShapeBooleanv(UInt32 shapeId, HLGetShapeParams pname, ref byte value) { _hlGetShapeBooleanv(shapeId, DLLEnumToIntPtr(pname), ref value); }
+        public static void hlGetShapeBooleanv(uint shapeId, HLGetShapeParams pname, ref byte value) { _hlGetShapeBooleanv(shapeId, DLLEnumToIntPtr(pname), ref value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetShapeBooleanv")]
-        private static extern void _hlGetShapeBooleanv(UInt32 shapeId, IntPtr pname, ref byte value);
+        private static extern void _hlGetShapeBooleanv(uint shapeId, IntPtr pname, ref byte value);
 
         /// <summary>
         /// 允许查询特定形状的状态
@@ -816,9 +816,9 @@ namespace OH4CSharp.HL
         /// <param name="value">返回正在查询的参数值的地址</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetShapeDoublev(UInt32 shapeId, HLGetShapeParams pname, IntPtr value) { _hlGetShapeDoublev(shapeId, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetShapeDoublev(uint shapeId, HLGetShapeParams pname, IntPtr value) { _hlGetShapeDoublev(shapeId, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetShapeDoublev")]
-        private static extern void _hlGetShapeDoublev(UInt32 shapeId, IntPtr pname, IntPtr value);
+        private static extern void _hlGetShapeDoublev(uint shapeId, IntPtr pname, IntPtr value);
 
         /// <summary>
         /// 允许查询特定形状的状态
@@ -834,9 +834,9 @@ namespace OH4CSharp.HL
         /// <param name="value">返回正在查询的参数值的地址</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetShapeDoublev(UInt32 shapeId, HLGetShapeParams pname, double[] value) { _hlGetShapeDoublev(shapeId, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetShapeDoublev(uint shapeId, HLGetShapeParams pname, double[] value) { _hlGetShapeDoublev(shapeId, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetShapeDoublev")]
-        private static extern void _hlGetShapeDoublev(UInt32 shapeId, IntPtr pname, double[] value);
+        private static extern void _hlGetShapeDoublev(uint shapeId, IntPtr pname, double[] value);
 
         /// <summary>
         /// 允许查询特定形状的状态
@@ -852,9 +852,9 @@ namespace OH4CSharp.HL
         /// <param name="value">返回正在查询的参数值的地址</param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetShapeDoublev(UInt32 shapeId, HLGetShapeParams pname, ref double value) { _hlGetShapeDoublev(shapeId, DLLEnumToIntPtr(pname), ref value); }
+        public static void hlGetShapeDoublev(uint shapeId, HLGetShapeParams pname, ref double value) { _hlGetShapeDoublev(shapeId, DLLEnumToIntPtr(pname), ref value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetShapeDoublev")]
-        private static extern void _hlGetShapeDoublev(UInt32 shapeId, IntPtr pname, ref double value);
+        private static extern void _hlGetShapeDoublev(uint shapeId, IntPtr pname, ref double value);
 
         #endregion
 
@@ -986,7 +986,7 @@ namespace OH4CSharp.HL
         /// <exception cref="HLErrorCodes.HL_INVALID_VALUE"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
         [DllImport(DLL_PATH, EntryPoint = "hlDeleteEffects")]
-        public static extern void hlDeleteEffects(UInt32 effect, int range);
+        public static extern void hlDeleteEffects(uint effect, int range);
 
         /// <summary>
         /// 设置当前效果属性的值
@@ -1105,7 +1105,7 @@ namespace OH4CSharp.HL
         /// <exception cref="HLErrorCodes.HL_INVALID_VALUE"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
         [DllImport(DLL_PATH, EntryPoint = "hlGenEffects")]
-        public static extern UInt32 hlGenEffects(int range);
+        public static extern uint hlGenEffects(int range);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1120,9 +1120,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectdv(UInt32 effect, HLEffectParams pname, IntPtr value) { _hlGetEffectdv(effect, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetEffectdv(uint effect, HLEffectParams pname, IntPtr value) { _hlGetEffectdv(effect, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectdv")]
-        private static extern void _hlGetEffectdv(UInt32 effect, IntPtr pname, IntPtr value);
+        private static extern void _hlGetEffectdv(uint effect, IntPtr pname, IntPtr value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1137,9 +1137,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectdv(UInt32 effect, HLEffectParams pname, double[] value) { _hlGetEffectdv(effect, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetEffectdv(uint effect, HLEffectParams pname, double[] value) { _hlGetEffectdv(effect, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectdv")]
-        private static extern void _hlGetEffectdv(UInt32 effect, IntPtr pname, double[] value);
+        private static extern void _hlGetEffectdv(uint effect, IntPtr pname, double[] value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1154,9 +1154,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectdv(UInt32 effect, HLEffectParams pname, ref double value) { _hlGetEffectdv(effect, DLLEnumToIntPtr(pname), ref value); }
+        public static void hlGetEffectdv(uint effect, HLEffectParams pname, ref double value) { _hlGetEffectdv(effect, DLLEnumToIntPtr(pname), ref value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectdv")]
-        private static extern void _hlGetEffectdv(UInt32 effect, IntPtr pname, ref double value);
+        private static extern void _hlGetEffectdv(uint effect, IntPtr pname, ref double value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1171,9 +1171,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectiv(UInt32 effect, HLEffectParams pname, IntPtr value) { _hlGetEffectiv(effect, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetEffectiv(uint effect, HLEffectParams pname, IntPtr value) { _hlGetEffectiv(effect, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectiv")]
-        private static extern void _hlGetEffectiv(UInt32 effect, IntPtr pname, IntPtr value);
+        private static extern void _hlGetEffectiv(uint effect, IntPtr pname, IntPtr value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1188,9 +1188,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectiv(UInt32 effect, HLEffectParams pname, int[] value) { _hlGetEffectiv(effect, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetEffectiv(uint effect, HLEffectParams pname, int[] value) { _hlGetEffectiv(effect, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectiv")]
-        private static extern void _hlGetEffectiv(UInt32 effect, IntPtr pname, int[] value);
+        private static extern void _hlGetEffectiv(uint effect, IntPtr pname, int[] value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1205,9 +1205,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectiv(UInt32 effect, HLEffectParams pname, ref int value) { _hlGetEffectiv(effect, DLLEnumToIntPtr(pname), ref value); }
+        public static void hlGetEffectiv(uint effect, HLEffectParams pname, ref int value) { _hlGetEffectiv(effect, DLLEnumToIntPtr(pname), ref value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectiv")]
-        private static extern void _hlGetEffectiv(UInt32 effect, IntPtr pname, ref int value);
+        private static extern void _hlGetEffectiv(uint effect, IntPtr pname, ref int value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1222,9 +1222,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectbv(UInt32 effect, HLEffectParams pname, IntPtr value) { _hlGetEffectbv(effect, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetEffectbv(uint effect, HLEffectParams pname, IntPtr value) { _hlGetEffectbv(effect, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectbv")]
-        private static extern void _hlGetEffectbv(UInt32 effect, IntPtr pname, IntPtr value);
+        private static extern void _hlGetEffectbv(uint effect, IntPtr pname, IntPtr value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1239,9 +1239,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectbv(UInt32 effect, HLEffectParams pname, byte[] value) { _hlGetEffectbv(effect, DLLEnumToIntPtr(pname), value); }
+        public static void hlGetEffectbv(uint effect, HLEffectParams pname, byte[] value) { _hlGetEffectbv(effect, DLLEnumToIntPtr(pname), value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectbv")]
-        private static extern void _hlGetEffectbv(UInt32 effect, IntPtr pname, byte[] value);
+        private static extern void _hlGetEffectbv(uint effect, IntPtr pname, byte[] value);
 
         /// <summary>
         /// Gets the current value of an effect property.
@@ -1256,9 +1256,9 @@ namespace OH4CSharp.HL
         /// <param name="value"></param>
         /// <exception cref="HLErrorCodes.HL_INVALID_ENUM"></exception>
         /// <exception cref="HLErrorCodes.HL_INVALID_OPERATION"></exception>
-        public static void hlGetEffectbv(UInt32 effect, HLEffectParams pname, ref byte value) { _hlGetEffectbv(effect, DLLEnumToIntPtr(pname), ref value); }
+        public static void hlGetEffectbv(uint effect, HLEffectParams pname, ref byte value) { _hlGetEffectbv(effect, DLLEnumToIntPtr(pname), ref value); }
         [DllImport(DLL_PATH, EntryPoint = "hlGetEffectbv")]
-        private static extern void _hlGetEffectbv(UInt32 effect, IntPtr pname, ref byte value);
+        private static extern void _hlGetEffectbv(uint effect, IntPtr pname, ref byte value);
 
         /// <summary>
         /// 确定标识符是否是有效的效果标识符。

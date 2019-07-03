@@ -29,6 +29,10 @@ namespace OH4CSharp.HL
             return Marshal.PtrToStringAnsi(errorCode);
         }
 
+        /// <summary>
+        /// 检查错误，如果有错误信息将返回 true
+        /// </summary>
+        /// <returns></returns>
         public bool CheckedError()
         {
             return Marshal.PtrToStringAnsi(errorCode) != "HL_NO_ERROR";
@@ -126,6 +130,7 @@ namespace OH4CSharp.HL
     }
     #endregion
 
+
     #region HL hlGetBooleanv/hlGetDoublev/hlGetIntegerv/GetString Parameters
     /// <summary>
     /// Table B-1: hlGetBooleanv, hlGetIntegerv, hlGetDoublev
@@ -147,47 +152,110 @@ namespace OH4CSharp.HL
         /// </summary>
         HL_SAFETY_STATE,
 
+        /// <summary>
+        /// 单布尔值，表示触觉装置上的墨孔开关(如果存在)。true值表示开关被抑制。
+        /// </summary>
         HL_INKWELL_STATE,
 
+        /// <summary>
+        /// 双精度值表示设备在世界坐标下的穿透深度。这将返回代理所触及的当前对象的穿透深度。
+        /// </summary>
         HL_DEPTH_OF_PENETRATION,
 
+        /// <summary>
+        /// Vector 3 of doubles. 表示最后一个力，以世界坐标系发送给触觉装置。
+        /// </summary>
         HL_DEVICE_FORCE,
 
+        /// <summary>
+        /// Vector 3 of doubles. 表示触觉装置在世界坐标中的位置。
+        /// </summary>
         HL_DEVICE_POSITION,
 
+        /// <summary>
+        /// Vector 4 of doubles. 表示一个四元数，它指定触觉装置在世界坐标中的旋转。
+        /// </summary>
         HL_DEVICE_ROTATION,
 
+        /// <summary>
+        /// Vector 3 of doubles. 代表最后一个扭矩，以世界坐标表示，发送到触觉装置。
+        /// </summary>
         HL_DEVICE_TORQUE,
 
+        /// <summary>
+        /// Vector 16 of doubles. 表示4x4变换矩阵，按列主序表示触觉装置相对于世界坐标的变换。
+        /// </summary>
         HL_DEVICE_TRANSFORM,
 
+        /// <summary>
+        /// 双精度值，以弧度表示代理在触发运动事件之前必须移动的最小旋转。
+        /// </summary>
         HL_EVENT_MOTION_ANGULAR_TOLERANCE,
 
+        /// <summary>
+        /// 双精度值，表示在设备工作区坐标中，代理在触发运动事件之前必须移动的最小距离。
+        /// </summary>
         HL_EVENT_MOTION_LINEAR_TOLERANCE,
 
+        /// <summary>
+        /// Vector 3 of doubles. 在世界坐标中表示金色球体的中心位置。
+        /// <para>金色球体是代理的包围体，它为特定的HL帧指定了允许代理移动的空间。客户端负责在这个边界卷中提供几何图形。通常，当启用触觉相机视图时，这个边界卷用于调整图形视图卷的大小。</para>
+        /// <para>adaptive viewport优化还引用了这个金色球体来确定需要读取多少深度缓冲区。此外，在实现回调形状或执行包围卷筛选时，golden sphere非常有用。球体的半径可以使用 HL_GOLDEN_RADIUS 查询。</para>
+        /// </summary>
         HL_GOLDEN_POSITION,
 
+        /// <summary>
+        /// 一个双精度值，以世界坐标表示金球半径的双精度值。
+        /// <para>金色球体是代理的包围体，它为特定的HL帧指定了允许代理移动的空间。客户端负责在这个边界卷中提供几何图形。通常，当启用触觉相机视图时，这个边界卷用于调整图形视图卷的大小。</para>
+        /// <para>adaptive viewport优化还引用了这个金色球体来确定需要读取多少深度缓冲区。此外，在实现回调形状或执行包围卷筛选时，golden sphere非常有用。球体的中心可以使用HL_GOLDEN_POSITION查询。</para>
+        /// </summary>
         HL_GOLDEN_RADIUS,
 
+        /// <summary>
+        /// Vector 16 of doubles. 16个双精度数组，按列主顺序表示4x4转换矩阵，指定从模型坐标到视图坐标的转换。
+        /// <para>这个矩阵只在不使用OpenGL modelview(当HL_USE_GL_MODELVIEW被禁用时)时应用。当使用OpenGL modelview时，您应该使用OpenGL函数来查询modelview矩阵。</para>
+        /// </summary>
         HL_MODELVIEW,
 
+        /// <summary>
+        /// 当代理与一个或多个形状接触时，将单个布尔值设置为true。
+        /// </summary>
         HL_PROXY_IS_TOUCHING,
 
+        /// <summary>
+        /// Vector 3 of doubls. 表示代理在世界坐标中的位置。
+        /// </summary>
         HL_PROXY_POSITION,
 
+        /// <summary>
+        /// Vector 4 of doubles. 表示一个四元数，该四元数指定代理在世界坐标中的旋转。
+        /// </summary>
         HL_PROXY_ROTATION,
 
+        /// <summary>
+        /// 获取模型的可触摸面，它表示可以感觉到模型的哪一侧。返回值列表见“表B-10: hlMaterialf - face values”。
+        /// </summary>
         HL_TOUCHABLE_FACE,
 
+        /// <summary>
+        /// Vector 3 of doubles. 表示与代理相接触的一组形状在接触点处的表面法线，只有 HL_PROXY_IS_TOUCHING 为 true 时才有效
+        /// </summary>
         HL_PROXY_TOUCH_NORMAL,
 
+        /// <summary>
+        /// Vector 16 of doubles. 表示一个4x4变换矩阵，按列主顺序排列，指定代理相对于世界坐标的变换。
+        /// </summary>
         HL_PROXY_TRANSFORM,
 
+        /// <summary>
+        /// 16个双精度数组，按列主顺序表示4x4转换矩阵，指定从触摸坐标到工作空间坐标的转换。
+        /// </summary>
         HL_TOUCHWORKSPACE_MATRIX,
 
+        /// <summary>
+        /// 16个双精度数组，以列主顺序表示4x4转换矩阵，指定从视图坐标到触摸坐标的转换。
+        /// </summary>
         HL_VIEWTOUCH,
-
-
     }
 
     /// <summary>
@@ -211,19 +279,74 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLCacheGetParameters
     {
+        /// <summary>
+        /// 单个布尔值，表示触觉设备上的第一个按钮。true的值表示按钮被按下。
+        /// </summary>
         HL_BUTTON1_STATE,
+
+        /// <summary>
+        /// 单个布尔值，表示触觉设备上的第二个按钮。true的值表示按钮被按下。
+        /// </summary>
         HL_BUTTON2_STATE,
+
+        /// <summary>
+        /// 单布尔值，表示触觉装置上的安全开关(如果存在)。true值表示开关被抑制。
+        /// </summary>
         HL_SAFETY_STATE,
+
+        /// <summary>
+        /// 单布尔值，表示触觉装置上的墨孔开关(如果存在)。true值表示开关被抑制。
+        /// </summary>
         HL_INKWELL_STATE,
+
+        /// <summary>
+        /// Vector 3 of doubles. 表示最后一个力，以世界坐标系发送给触觉装置。
+        /// </summary>
         HL_DEVICE_FORCE,
+
+        /// <summary>
+        /// Vector 3 of doubles. 表示触觉装置在世界坐标中的位置。
+        /// </summary>
         HL_DEVICE_POSITION,
+
+        /// <summary>
+        /// Vector 4 of doubles. 表示一个四元数，它指定触觉装置在世界坐标中的旋转。
+        /// </summary>
         HL_DEVICE_ROTATION,
+
+        /// <summary>
+        /// Vector 3 of doubles. 代表最后一个扭矩，以世界坐标表示，发送到触觉装置。
+        /// </summary>
         HL_DEVICE_TORQUE,
+
+        /// <summary>
+        /// Vector 16 of doubles. 表示4x4变换矩阵，按列主序表示触觉装置相对于世界坐标的变换。
+        /// </summary>
         HL_DEVICE_TRANSFORM,
+
+        /// <summary>
+        /// 单个布尔值，设置为 true 时代理与一个或多个形状接触
+        /// </summary>
         HL_PROXY_IS_TOUCHING,
+
+        /// <summary>
+        /// Vector 3 of doubles. 表示代理在世界坐标中的位置。
+        /// </summary>
         HL_PROXY_POSITION,
+
+        /// <summary>
+        /// Vector 4 of doubles. 表示一个四元数，该四元数指定代理在世界坐标中的旋转。
+        /// </summary>
         HL_PROXY_ROTATION,
+
+        /// <summary>
+        /// Vector 3 of doubles. 表示与代理相接触的一组形状在接触点处的表面法线，只有 HL_PROXY_IS_TOUCHING 为 true 时才有效
+        /// </summary>
         HL_PROXY_TOUCH_NORMAL,
+
+        /// <summary>
+        /// Vector 16 of doubles. 表示一个4x4变换矩阵，按列主顺序排列，指定代理相对于世界坐标的变换。
+        /// </summary>
         HL_PROXY_TRANSFORM,
     }
     #endregion
@@ -423,7 +546,14 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLTouchModelParams
     {
+        /// <summary>
+        /// 代理位置不允许通过几何基元（三角形）。代理可能会从表面移动，但仍将保留在其一侧。
+        /// </summary>
         HL_CONTACT,
+
+        /// <summary>
+        /// 代理位置被约束为精确地保持在几何基本体的曲面上，并且只有当设备位置和代理之间的距离大于捕捉距离时，才能将其移出曲面。
+        /// </summary>
         HL_CONSTRAINT,
     }
 
@@ -432,6 +562,10 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLTouchModelIfParams
     {
+        /// <summary>
+        /// 代理位置和曲面之间的距离，必须超过该距离才能解除约束。
+        /// <para>参数应该是一个浮点值，表示工作区坐标中以毫米为单位的距离。默认值为 FLT_MAX 以始终处于活动状态。</para>
+        /// </summary>
         HL_FRONT,
     }
 
@@ -440,14 +574,39 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLStartEffectTypes
     {
+        /// <summary>
+        /// 向触觉装置发送的总力中添加一个恒定的力矢量。
+        /// <para>effect属性 HL_EFFECT_PROPERTY_DIRECTION 指定力向量的方向。</para>
+        /// <para>效果属性 HL_EFFECT_PROPERTY_MAGNITUDE 指定力向量的大小。</para>
+        /// </summary>
         HL_EFFECT_CONSTANT,
 
+        /// <summary>
+        /// 将弹簧力添加到发送到触觉设备的总力中。
+        /// <para>弹簧力将触觉装置拉向效应位置，并与增益和效应位置与装置位置之间的距离成正比。</para>
+        /// <para>具体来说，弹簧力是使用表达式 f=k(p-x) 计算的，其中f是弹簧力，p是作用位置，x是当前的触觉装置位置，k是增益。</para>
+        /// <para>效果位置由属性 HL_EFFECT_PROPERTY_POSITION 指定。增益由属性 HL_EFFECT_PROPERTY_GAIN 指定。效应力的大小限制在效果属性 HL_EFFECT_MAGNITUDE 的值上。</para>
+        /// </summary>
         HL_EFFECT_SPRING,
 
+        /// <summary>
+        /// 将粘性力添加到发送到触觉设备的总力中。
+        /// <para>粘性力以触觉装置的电流速度为基础，通过计算来抵抗触觉装置的运动。</para>
+        /// <para>具体来说，力是用表达式 f=-kv 计算的，其中f是弹簧力，v是速度，k是增益。</para>
+        /// <para>增益由属性 HL_EFFECT_PROPERTY_GAIN 指定。效应力的大小限制在效果属性 HL_EFFECT_MAGNITUDE 的值上。</para>
+        /// </summary>
         HL_EFFECT_VISCOUS,
 
+        /// <summary>
+        /// 将摩擦力添加到发送到触觉设备的总力中。
+        /// <para>与通过 hlMaterial()调用指定的摩擦不同，这是在接触对象和REE空间时的摩擦。</para>
+        /// <para>摩擦力的增益由属性 HL_EFFECT_PROPERTY_GAIN 指定。效应力的大小限制在效果属性 HL_EFFECT_MAGNITUDE 的值上。</para>
+        /// </summary>
         HL_EFFECT_FRICTION,
 
+        /// <summary>
+        /// 允许用户通过使用 hlCallback() s设置效果回调来创建自定义效果。
+        /// </summary>
         HL_EFFECT_CALLBACK,
     }
 
@@ -456,14 +615,39 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLTriggerEffectTypes
     {
+        /// <summary>
+        /// 向触觉装置发送的总力中添加一个恒定的力矢量。
+        /// <para>effect属性 HL_EFFECT_PROPERTY_DIRECTION 指定力向量的方向。</para>
+        /// <para>效果属性 HL_EFFECT_PROPERTY_MAGNITUDE 指定力向量的大小。</para>
+        /// </summary>
         HL_EFFECT_CONSTANT,
 
+        /// <summary>
+        /// 将弹簧力添加到发送到触觉设备的总力中。
+        /// <para>弹簧力将触觉装置拉向效应位置，并与增益和效应位置与装置位置之间的距离成正比。</para>
+        /// <para>具体来说，弹簧力是使用表达式 f=k(p-x) 计算的，其中f是弹簧力，p是作用位置，x是当前的触觉装置位置，k是增益。</para>
+        /// <para>效果位置由属性 HL_EFFECT_PROPERTY_POSITION 指定。增益由属性 HL_EFFECT_PROPERTY_GAIN 指定。效应力的大小限制在效果属性 HL_EFFECT_MAGNITUDE 的值上。</para>
+        /// </summary>
         HL_EFFECT_SPRING,
 
+        /// <summary>
+        /// 将粘性力添加到发送到触觉设备的总力中。
+        /// <para>粘性力以触觉装置的电流速度为基础，通过计算来抵抗触觉装置的运动。</para>
+        /// <para>具体来说，力是用表达式 f=-kv 计算的，其中f是弹簧力，v是速度，k是增益。</para>
+        /// <para>增益由属性 HL_EFFECT_PROPERTY_GAIN 指定。效应力的大小限制在效果属性 HL_EFFECT_MAGNITUDE 的值上。</para>
+        /// </summary>
         HL_EFFECT_VISCOUS,
 
+        /// <summary>
+        /// 将摩擦力添加到发送到触觉设备的总力中。
+        /// <para>与通过 hlMaterial()调用指定的摩擦不同，这是在接触对象和REE空间时的摩擦。</para>
+        /// <para>摩擦力的增益由属性 HL_EFFECT_PROPERTY_GAIN 指定。效应力的大小限制在效果属性 HL_EFFECT_MAGNITUDE 的值上。</para>
+        /// </summary>
         HL_EFFECT_FRICTION,
 
+        /// <summary>
+        /// 允许用户通过使用 hlCallback() s设置效果回调来创建自定义效果。
+        /// </summary>
         HL_EFFECT_CALLBACK,
     }
 
@@ -473,7 +657,7 @@ namespace OH4CSharp.HL
     public enum HLEffectParams
     {
         /// <summary>
-        /// 适用于弹簧、摩擦和粘滞效应类型。更高的增益将导致这些效应产生更大的力量。
+        /// 适用于弹簧、摩擦和粘滞效果类型。更高的增益将导致这些效应产生更大的力量。
         /// </summary>
         HL_EFFECT_PROPERTY_GAIN,
 
@@ -488,7 +672,7 @@ namespace OH4CSharp.HL
         HL_EFFECT_PROPERTY_FREQUENCY,
 
         /// <summary>
-        /// 用于所有效果，开始时调用hlTriggerEffect()。当持续时间过去时，该效果将自动终止。持续时间以毫秒为单位指定。
+        /// 用于所有效果，开始时调用 hlTriggerEffect()。当持续时间过去时，该效果将自动终止。持续时间以毫秒为单位指定。
         /// </summary>
         HL_EFFECT_PROPERTY_DURATION,
 
@@ -542,11 +726,29 @@ namespace OH4CSharp.HL
     [Flags]
     public enum HLPushPopAttrib
     {
+        /// <summary>
+        /// 影响 hlInt() 命令设置的所有属性，如 HL_SHAPE_FEEDBACK_BUFFER。
+        /// </summary>
         HL_HINT_BIT = 0x01,
+        /// <summary>
+        /// 影响 hlMaterial() 命令指定的所有属性，如 HL_STIFFNESS、HL_DYNAMIC_FRICTION。
+        /// </summary>
         HL_MATERIAL_BIT = 0x02,
+        /// <summary>
+        /// 影响 hlTouch() 命令指定的所有属性，如 HL_SNAP_DISTANCE、HL_TOUCH_MODEL。
+        /// </summary>
         HL_TOUCH_BIT = 0x04,
+        /// <summary>
+        /// 影响所有转换和相机属性，如 HL_HAPTIC_CAMERA_VIEW、HL_ADAPTIVE_VIEWPORT。
+        /// </summary>
         HL_TRANSFORM_BIT = 0x08,
+        /// <summary>
+        /// 影响 hlEffect() 命令指定的所有属性，如 HL_EFFECT_PROPERTY_GAIN、HL_EFFECT_PROPERTY_DURATION。
+        /// </summary>
         HL_EFFECT_BIT = 0x10,
+        /// <summary>
+        /// 影响事件命令指定的所有属性，如 HL_EVENT_MOTION_LINEAR_THRESHOLD、HL_EVENT_MOTION_ANGULAR_TOLERANCE。
+        /// </summary>
         HL_EVENTS_BIT = 0x20,
     }
 
@@ -555,7 +757,14 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLCallbackTypes
     {
+        /// <summary>
+        /// 回调函数，使线段与用户定义的自定义形状相交。
+        /// </summary>
         HL_SHAPE_INTERSECT_LS,
+
+        /// <summary>
+        /// 回调函数，查找表面上与输入点最近的点，以及一个或多个近似该点附近表面的局部特征。
+        /// </summary>
         HL_SHAPE_CLOSEST_FEATURES,
     }
 
@@ -564,15 +773,46 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLCallbackEvents
     {
+        /// <summary>
+        /// 回调时将调用代理已经超过 HL_EVENT_MOTION_LINEAR_TOLERANCE 毫米的空间坐标的位置
+        /// <para>当最后运动事件被触发或当代理一直旋转超过 HL_EVENT_MOTION_ANGULAR_TOLERANCE 弧度旋转的代理上次运动事件被触发。</para>
+        /// </summary>
         HL_EVENT_MOTION,
+        /// <summary>
+        /// 当触觉设备上的第一个按钮被按下时，将调用回调。
+        /// </summary>
         HL_EVENT_1BUTTONDOWN,
+        /// <summary>
+        /// 当触觉设备上的第一个按钮被释放时，将调用回调。
+        /// </summary>
         HL_EVENT_1BUTTONUP,
+        /// <summary>
+        /// 当触觉设备上的第二个按钮被按下时，将调用回调。
+        /// </summary>
         HL_EVENT_2BUTTONDOWN,
+        /// <summary>
+        /// 当触觉设备上的第二个按钮被释放时，将调用回调。
+        /// </summary>
         HL_EVENT_2BUTTONUP,
+        /// <summary>
+        /// 当安全开关(如果可用)被按下时，将调用回调。
+        /// </summary>
         HL_EVENT_SAFETYDOWN,
+        /// <summary>
+        /// 当释放安全开关(如果可用)时，将调用回调函数。
+        /// </summary>
         HL_EVENT_SAFETYUP,
+        /// <summary>
+        /// 当墨水瓶开关(如果可用)被按下时，将调用回调。
+        /// </summary>
         HL_EVENT_INKWELLDOWN,
+        /// <summary>
+        /// 当墨水瓶开关(如果可用)被释放时，将调用回调。
+        /// </summary>
         HL_EVENT_INKWELL_UP,
+        /// <summary>
+        /// 当触摸到场景中的形状(代理与该形状保持联系)时，将调用回调函数。
+        /// </summary>
         HL_EVENT_TOUCH,
     }
 
@@ -581,7 +821,14 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLCallbackThreads
     {
+        /// <summary>
+        /// 当客户机程序调用 hlCheckEvents() 时，将从客户机线程调用回调函数。
+        /// </summary>
         HL_CLIENT_THREAD,
+        /// <summary>
+        /// 回调函数将从触觉呈现引擎中运行的内部冲突线程调用。
+        /// <para>大多数事件回调应该在客户端线程中处理，但是在某些情况下，由于时间需求，需要使用冲突线程回调。</para>
+        /// </summary>
         HL_COLLISION_THREAD,
     }
 
@@ -590,7 +837,14 @@ namespace OH4CSharp.HL
     /// </summary>
     public enum HLEventdParams
     {
+        /// <summary>
+        /// 设置设备工作区坐标中的最小距离，在触发运动事件之前代理的线性平移必须更改该距离。默认情况下，这个值是 1 毫米。
+        /// </summary>
         HL_EVENT_MOTION_LINEAR_TOLERANCE,
+
+        /// <summary>
+        /// 设置最小角度距离，在触发运动事件之前代理的方向必须更改。默认值是 0.02 弧度。
+        /// </summary>
         HL_EVENT_MOTION_ANGULAR_TOLERANCE,
     }
 
