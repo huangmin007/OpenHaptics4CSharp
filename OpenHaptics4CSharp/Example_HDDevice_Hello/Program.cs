@@ -79,7 +79,7 @@ namespace Example_HDDevice_Hello
             //触觉技术框架开始。(一般来说，所有与状态相关的触觉调用都应该在一个框架内进行。)
             HDAPI.hdBeginFrame(hHD);
             //获取设备的当前位置
-            HDAPI.hdGetDoublev(HDGetParameters.HD_CURRENT_POSITION, out position);
+            HDAPI.hdGetDoublev(HDGetParameters.HD_CURRENT_POSITION, ref position);
             //Console.WriteLine("Vector3D:{0}  {1}  {2}", position.X, position.Y, position.Z);
             force.ResetZero();
 

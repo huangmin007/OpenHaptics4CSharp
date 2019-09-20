@@ -88,7 +88,7 @@ namespace OH4CSharp2HDConsole
 
         static HDCallbackCode GetSyncPos(IntPtr pUserData)
         {
-            Vector3D v3 = OHUtils.IntPtrToStruct<Vector3D>(pUserData);
+            Vector3D v3 = HDDLLUtils.IntPtrToStruct<Vector3D>(pUserData);
 
             HDAPI.hdBeginFrame(v3.HHD);
             //将获取的坐标位置放入结构数据前三个double字节中
