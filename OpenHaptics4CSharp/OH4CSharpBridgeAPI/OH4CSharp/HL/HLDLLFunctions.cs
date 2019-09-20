@@ -61,6 +61,7 @@ namespace OH4CSharp.HL
         /// hd.dll 路径，后面在改
         /// </summary>
         public const string DLL_PATH = @"hl.dll";
+        //public const string DLL_PATH = @"D:\OpenHaptics\Developer\3.5.0\lib\x64\Release\hl.dll";
 
         /// <summary>
         /// hl.dll 指针

@@ -1,4 +1,3 @@
-E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HLDeployment\obj\Debug\Example_HLDeployment.csprojResolveAssemblyReference.cache
 E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HLDeployment\bin\Debug\Example_HLDeployment.exe
 E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HLDeployment\bin\Debug\Example_HLDeployment.pdb
 E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\Example_HLDeployment\bin\Debug\OH4CSharpBridge.dll

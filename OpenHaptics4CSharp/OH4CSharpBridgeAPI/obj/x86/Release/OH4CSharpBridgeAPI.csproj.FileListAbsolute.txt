@@ -1,0 +1,4 @@
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpBridgeAPI\bin\x86\Release\OH4CSharpBridge.dll
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpBridgeAPI\bin\x86\Release\OH4CSharpBridge.pdb
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpBridgeAPI\obj\x86\Release\OH4CSharpBridge.dll
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpBridgeAPI\obj\x86\Release\OH4CSharpBridge.pdb

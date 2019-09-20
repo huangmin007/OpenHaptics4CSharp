@@ -1,0 +1,7 @@
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpTest\bin\x86\Release\OH4CSharpTest.exe
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpTest\bin\x86\Release\OH4CSharpTest.pdb
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpTest\bin\x86\Release\OH4CSharpBridge.dll
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpTest\bin\x86\Release\OH4CSharpBridge.pdb
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpTest\obj\x86\Release\OH4CSharpTest.csprojResolveAssemblyReference.cache
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpTest\obj\x86\Release\OH4CSharpTest.exe
+E:\2018\2019_OpenHaptics\OpenHaptics4CSharp\OH4CSharpTest\obj\x86\Release\OH4CSharpTest.pdb
